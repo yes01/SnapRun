@@ -287,7 +287,34 @@ final class ScriptExecutor: ObservableObject {
             }
             adoptedProcesses.removeValue(forKey: taskId)
             TaskScheduler.shared.runningTaskIDs.remove(taskId)
+            // Normal-spawn cancels finalize the log when `execute(...)`'s
+            // waitUntilExit returns; adopted entries have no such await
+            // loop (launchd is the parent, not us). Write the terminal
+            // state here so the UI stops showing the task as running.
+            finalizeAdoptedLog(taskId: taskId, pid: adoptedPID, reason: "[TaskTick] Adopted process \(adoptedPID) was stopped by user.")
         }
+    }
+
+    /// Walk the most-recent `.running` log for `taskId` to a `.cancelled`
+    /// terminal state. Used after we signal an adopted process — we don't
+    /// have a `Process.waitUntilExit` to flush the log row for us.
+    private func finalizeAdoptedLog(taskId: UUID, pid: Int32, reason: String) {
+        let ctx = TaskTickApp._sharedModelContainer.mainContext
+        let runningRaw = ExecutionStatus.running.rawValue
+        let descriptor = FetchDescriptor<ExecutionLog>(
+            predicate: #Predicate { $0.statusRaw == runningRaw && $0.task?.id == taskId }
+        )
+        guard let log = try? ctx.fetch(descriptor).first else { return }
+        let now = Date()
+        log.status = .cancelled
+        log.finishedAt = now
+        if log.durationMs == nil {
+            log.durationMs = Int(now.timeIntervalSince(log.startedAt) * 1000)
+        }
+        if (log.stderr ?? "").isEmpty {
+            log.stderr = reason
+        }
+        try? ctx.save()
     }
 
     /// Synchronously terminate every running script. Designed for app-quit:
