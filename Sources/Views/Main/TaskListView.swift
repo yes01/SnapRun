@@ -257,12 +257,11 @@ struct TaskListView: View {
 struct TaskListRow: View {
     let task: ScheduledTask
     let isRunning: Bool
-    /// `List(selection:)` paints the selected row in the system accent colour
-    /// (blue by default). The status circles use fixed fills that aren't
-    /// part of SwiftUI's auto-flip-to-white pipeline for `primary`/`secondary`
-    /// content, so a blue running-dot or grey disabled-dot would melt into
-    /// that accent background. When selected, we swap the fills for white-
-    /// tinted variants that read cleanly against any accent colour.
+    /// `List(selection:)` paints the selected row in the system accent
+    /// colour. We deliberately do NOT flip the status dot to white when
+    /// selected — keeping the semantic colour (green=enabled, blue=running)
+    /// preserves the at-a-glance meaning that the inverse-colour variant
+    /// destroyed. The dot reads fine against the accent background.
     let isSelected: Bool
 
     private static let relativeFormatter: RelativeDateTimeFormatter = {
@@ -272,19 +271,12 @@ struct TaskListRow: View {
     }()
 
     private var statusDotFill: Color {
-        if isSelected {
-            return task.isEnabled ? .white : .white.opacity(0.5)
-        }
-        return task.isEnabled ? .green : .gray.opacity(0.35)
+        task.isEnabled ? .green : .gray.opacity(0.35)
     }
 
-    private var runningDotFill: Color {
-        isSelected ? .white : .blue
-    }
+    private var runningDotFill: Color { .blue }
 
-    private var runningHaloStroke: Color {
-        isSelected ? .white.opacity(0.5) : .blue.opacity(0.3)
-    }
+    private var runningHaloStroke: Color { .blue.opacity(0.3) }
 
     var body: some View {
         HStack(spacing: 10) {
