@@ -281,12 +281,14 @@ final class TaskScheduler: ObservableObject {
             return nil
         }
 
-        // Legacy interval support
-        if task.schedule == .interval, task.scheduledDate == nil {
-            if let interval = task.intervalSeconds, interval > 0 {
-                return date.addingTimeInterval(TimeInterval(interval))
-            }
-            return nil
+        // Legacy interval support — only matches tasks that actually carry a
+        // legacy `intervalSeconds`. New-system tasks share `scheduleType="interval"`
+        // as an init default, so without this guard a new task with no
+        // scheduledDate (date/time toggles off) would fall in here and return
+        // nil, blocking auto-execution. See issue #30.
+        if task.schedule == .interval, task.scheduledDate == nil,
+           let interval = task.intervalSeconds, interval > 0 {
+            return date.addingTimeInterval(TimeInterval(interval))
         }
 
         // New schedule system
