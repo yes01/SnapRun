@@ -23,7 +23,7 @@ let package = Package(
             name: "TaskTickApp",
             dependencies: ["TaskTickCore"],
             path: "Sources",
-            exclude: ["TaskTickCore", "CLI"]
+            exclude: ["TaskTickCore", "CLI", "Resources"]
         ),
         .executableTarget(
             name: "tasktick",

@@ -1,5 +1,5 @@
 import Foundation
-import os
+@preconcurrency import os
 
 /// One-time migration from the shared Application Support root to a bundleID-
 /// namespaced subdirectory.

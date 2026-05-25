@@ -1,6 +1,6 @@
 import Foundation
 import SQLite3
-import os
+@preconcurrency import os
 
 /// Hardens the SwiftData SQLite store against the "data stranded in WAL" class of bug.
 ///
