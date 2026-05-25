@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 
 /// Adds a pointing hand cursor on hover for any view.
+@MainActor
 struct PointerCursorModifier: ViewModifier {
     func body(content: Content) -> some View {
         content

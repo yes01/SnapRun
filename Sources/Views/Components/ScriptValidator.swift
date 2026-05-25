@@ -115,6 +115,7 @@ enum ScriptValidator {
 }
 
 /// Reusable validation button + result display row.
+@MainActor
 struct ScriptValidationRow: View {
     let script: String
     let shell: String

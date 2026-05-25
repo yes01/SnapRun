@@ -3,6 +3,7 @@ import SwiftData
 import ServiceManagement
 import TaskTickCore
 
+@MainActor
 struct SettingsView: View {
     // General
     @AppStorage("launchAtLogin") private var launchAtLogin = false
@@ -441,6 +442,7 @@ struct SettingsView: View {
         }
     }
 
+    @MainActor
     private func chooseBackupDirectory() {
         let panel = NSOpenPanel()
         panel.canChooseFiles = false
@@ -534,6 +536,7 @@ struct SettingsView: View {
         }
     }
 
+    @MainActor
     private func runLogCleanup() {
         let days = max(logRetentionDays, 0)
         let cutoff = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
@@ -644,6 +647,7 @@ struct SettingsView: View {
         .formStyle(.grouped)
     }
 
+    @MainActor
     private func applyAppearance(_ mode: String) {
         switch mode {
         case "light":
@@ -655,6 +659,7 @@ struct SettingsView: View {
         }
     }
 
+    @MainActor
     private func toggleLaunchAtLogin(_ enabled: Bool) {
         do {
             if enabled {

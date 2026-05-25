@@ -13,6 +13,7 @@ import SwiftUI
 /// - Auto-scrolls to the bottom only when the user was already at the bottom —
 ///   pin-to-bottom is what they want while watching live output, but if they
 ///   scrolled up to inspect, we don't yank them back.
+@MainActor
 struct LogTextView: NSViewRepresentable {
     let text: String
     var font: NSFont = .monospacedSystemFont(ofSize: 12, weight: .regular)
@@ -91,6 +92,7 @@ struct LogTextView: NSViewRepresentable {
         }
     }
 
+    @MainActor
     private func isAtBottom(_ scrollView: NSScrollView) -> Bool {
         let clipView = scrollView.contentView
         let docHeight = clipView.documentRect.height
@@ -100,6 +102,7 @@ struct LogTextView: NSViewRepresentable {
         return docHeight - visibleBottom < 40
     }
 
+    @MainActor
     private func scrollToBottom(_ scrollView: NSScrollView) {
         guard let tv = scrollView.documentView as? NSTextView else { return }
         let length = (tv.string as NSString).length

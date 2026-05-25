@@ -19,6 +19,7 @@ enum ScriptSource: String, CaseIterable {
     }
 }
 
+@MainActor
 struct TaskEditorView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
@@ -878,6 +879,7 @@ struct TaskEditorView: View {
 
     // MARK: - Helpers
 
+    @MainActor
     private func closeWindow() {
         editorState.close()
         // Close the editor window by finding it
@@ -888,6 +890,7 @@ struct TaskEditorView: View {
         NSApp.keyWindow?.close()
     }
 
+    @MainActor
     private func previewNextRun() -> Date? {
         guard hasDate || hasTime else { return nil }
         let tempTask = ScheduledTask()
@@ -899,6 +902,7 @@ struct TaskEditorView: View {
         return TaskScheduler.shared.computeNextRunDate(for: tempTask)
     }
 
+    @MainActor
     private func chooseFile() {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false

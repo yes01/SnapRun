@@ -5,6 +5,7 @@ import TaskTickCore
 /// Settings → Command Line section. Detects whether the `tasktick` symlink
 /// already points at the current .app, and offers a one-shot dialog with
 /// the sudo command pre-filled (1Password 7 pattern).
+@MainActor
 struct CLIInstallSection: View {
 
     @State private var installState: InstallState = .unknown

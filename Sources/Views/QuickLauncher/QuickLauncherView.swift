@@ -4,6 +4,7 @@ import TaskTickCore
 
 /// Spotlight-style search panel content. Lists matching tasks and runs the
 /// selected one when the user hits Enter.
+@MainActor
 struct QuickLauncherView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \ScheduledTask.createdAt, order: .reverse) private var tasks: [ScheduledTask]
@@ -420,11 +421,13 @@ struct QuickLauncherView: View {
 
 // MARK: - Row
 
+@MainActor
 private struct QuickLauncherRow: View {
     let task: ScheduledTask
     let isSelected: Bool
     let isRunning: Bool
 
+    @MainActor
     private static let relativeFormatter: RelativeDateTimeFormatter = {
         let f = RelativeDateTimeFormatter()
         f.unitsStyle = .short

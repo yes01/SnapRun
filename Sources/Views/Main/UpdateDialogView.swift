@@ -4,6 +4,7 @@ import TaskTickCore
 
 // MARK: - Markdown WebView
 
+@MainActor
 struct MarkdownWebView: NSViewRepresentable {
     let markdown: String
 
@@ -146,6 +147,7 @@ struct MarkdownWebView: NSViewRepresentable {
     }
 }
 
+@MainActor
 struct UpdateDialogView: View {
     @ObservedObject var updater: UpdateChecker
     @Environment(\.dismiss) private var dismiss

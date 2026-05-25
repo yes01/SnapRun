@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import TaskTickCore
 
+@MainActor
 struct CrontabImportView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss

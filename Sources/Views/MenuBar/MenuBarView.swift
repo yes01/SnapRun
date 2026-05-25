@@ -3,6 +3,7 @@ import SwiftData
 import TaskTickCore
 
 /// Content view displayed in the menu bar popover.
+@MainActor
 struct MenuBarView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
@@ -181,6 +182,7 @@ struct MenuBarView: View {
 /// Reusable footer row with hover background — same visual contract as
 /// `MenuBarTaskRow` so the menu reads as one coherent list rather than
 /// "task list" + "ruled command list".
+@MainActor
 struct MenuBarFooterButton<Trailing: View>: View {
     let title: String
     let action: () -> Void
@@ -214,6 +216,7 @@ extension MenuBarFooterButton where Trailing == EmptyView {
     }
 }
 
+@MainActor
 struct MenuBarTaskRow: View {
     @Environment(\.modelContext) private var modelContext
     let task: ScheduledTask

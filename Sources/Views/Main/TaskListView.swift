@@ -16,6 +16,7 @@ enum TaskFilter: String, CaseIterable {
     }
 }
 
+@MainActor
 struct TaskListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
@@ -254,6 +255,7 @@ struct TaskListView: View {
     }
 }
 
+@MainActor
 struct TaskListRow: View {
     let task: ScheduledTask
     let isRunning: Bool
@@ -264,6 +266,7 @@ struct TaskListRow: View {
     /// destroyed. The dot reads fine against the accent background.
     let isSelected: Bool
 
+    @MainActor
     private static let relativeFormatter: RelativeDateTimeFormatter = {
         let f = RelativeDateTimeFormatter()
         f.unitsStyle = .short

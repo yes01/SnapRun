@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import TaskTickCore
 
+@MainActor
 struct TaskDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
@@ -685,6 +686,7 @@ struct TaskDetailView: View {
         }
     }
 
+    @MainActor
     private static let relativeFormatter: RelativeDateTimeFormatter = {
         let f = RelativeDateTimeFormatter()
         f.unitsStyle = .short
@@ -708,6 +710,7 @@ struct TaskDetailView: View {
     }
 }
 
+@MainActor
 struct StatusIndicator: View {
     let isEnabled: Bool
 

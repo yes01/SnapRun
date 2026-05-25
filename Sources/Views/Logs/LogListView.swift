@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import TaskTickCore
 
+@MainActor
 struct LogListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \ExecutionLog.startedAt, order: .reverse) private var logs: [ExecutionLog]
@@ -84,6 +85,7 @@ struct LogListView: View {
     }
 }
 
+@MainActor
 struct FilterChip: View {
     let label: String
     var color: Color = .accentColor
@@ -106,6 +108,7 @@ struct FilterChip: View {
     }
 }
 
+@MainActor
 struct LogListRow: View {
     let log: ExecutionLog
 

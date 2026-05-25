@@ -72,6 +72,7 @@ final class StrongReminderPanel {
     }
 }
 
+@MainActor
 struct StrongReminderView: View {
     let taskName: String
     let output: String

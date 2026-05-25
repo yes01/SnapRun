@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import TaskTickCore
 
+@MainActor
 @main
 struct TaskTickApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -14,7 +15,7 @@ struct TaskTickApp: App {
     @State private var showingRecoveryAlert = false
 
     /// Set to true when ModelContainer failed and app is running with in-memory fallback
-    private(set) static var _needsRecovery = false
+    @MainActor private(set) static var _needsRecovery = false
 
     init() {
         let container = Self._sharedModelContainer

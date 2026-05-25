@@ -7,6 +7,7 @@ import TaskTickCore
 /// intercepts the next key press and saves the (keyCode, modifiers) pair.
 /// Until the user records a chord, modifier-only presses are ignored — we
 /// require an actual character/function key to commit the binding.
+@MainActor
 struct HotkeyRecorderView: View {
     @ObservedObject var settings: QuickLauncherSettings
     @State private var isRecording = false

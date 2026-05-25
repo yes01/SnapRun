@@ -2,6 +2,7 @@ import SwiftUI
 import TaskTickCore
 
 /// A text field with a folder-chooser button for selecting a working directory.
+@MainActor
 struct WorkingDirectoryField: View {
     @Binding var path: String
 
@@ -21,6 +22,7 @@ struct WorkingDirectoryField: View {
         }
     }
 
+    @MainActor
     private func chooseDirectory() {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false

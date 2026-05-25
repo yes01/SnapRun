@@ -27,6 +27,7 @@ final class LanguageManager: ObservableObject {
 }
 
 /// View modifier that forces re-render when language changes.
+@MainActor
 struct LocalizedView: ViewModifier {
     @ObservedObject private var lm = LanguageManager.shared
 

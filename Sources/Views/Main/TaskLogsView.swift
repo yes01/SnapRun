@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import TaskTickCore
 
+@MainActor
 struct TaskLogsView: View {
     @Environment(\.dismiss) private var dismiss
     let task: ScheduledTask
@@ -94,6 +95,7 @@ struct TaskLogsView: View {
     }
 }
 
+@MainActor
 private struct LogDetailContent: View {
     let log: ExecutionLog
     @ObservedObject private var liveOutput = LiveOutputManager.shared

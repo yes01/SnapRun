@@ -1,6 +1,7 @@
 import SwiftUI
 import TaskTickCore
 
+@MainActor
 struct CronEditorView: View {
     @Binding var expression: String
     @State private var isCustom = false

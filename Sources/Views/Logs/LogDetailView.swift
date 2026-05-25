@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import TaskTickCore
 
+@MainActor
 struct LogDetailView: View {
     let log: ExecutionLog
     @ObservedObject private var liveOutput = LiveOutputManager.shared
@@ -145,6 +146,7 @@ struct LogDetailView: View {
     }
 }
 
+@MainActor
 struct OutputSection: View {
     let title: String
     let content: String

@@ -18,7 +18,10 @@ struct GlassCard<Content: View>: View {
                 if #available(macOS 26.0, *) {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.ultraThinMaterial)
-                        .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(.white.opacity(0.12), lineWidth: 0.8)
+                        )
                 } else {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.background)

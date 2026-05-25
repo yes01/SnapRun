@@ -1,6 +1,7 @@
 import SwiftUI
 import TaskTickCore
 
+@MainActor
 struct TemplateManagementView: View {
     @ObservedObject private var store = ScriptTemplateStore.shared
     @ObservedObject private var templateEditorState = TemplateEditorState.shared

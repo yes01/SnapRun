@@ -49,6 +49,7 @@ enum ToastIcon: Equatable {
 
 // MARK: - View
 
+@MainActor
 struct ToastView: View {
     let descriptor: ToastDescriptor
 
@@ -200,6 +201,7 @@ final class ToastCenterState: ObservableObject {
     @Published var current: ToastDescriptor?
 }
 
+@MainActor
 struct ToastHost: View {
     static let bottomInset: CGFloat = 56
     @ObservedObject var state: ToastCenterState

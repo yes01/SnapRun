@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 import TaskTickCore
 
 /// Template editor view, shown as a Window (not a sheet) to get proper TabView chrome.
+@MainActor
 struct TemplateEditorSheet: View {
     @ObservedObject private var editorState = TemplateEditorState.shared
     @ObservedObject private var store = ScriptTemplateStore.shared
@@ -209,6 +210,7 @@ struct TemplateEditorSheet: View {
         closeWindow()
     }
 
+    @MainActor
     private func closeWindow() {
         loaded = false
         editorState.close()
@@ -221,6 +223,7 @@ struct TemplateEditorSheet: View {
         NSApp.keyWindow?.close()
     }
 
+    @MainActor
     private func importFile() {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false

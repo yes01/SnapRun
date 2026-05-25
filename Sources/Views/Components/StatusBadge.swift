@@ -2,6 +2,7 @@ import SwiftUI
 import TaskTickCore
 
 /// A small badge displaying execution status with color and icon.
+@MainActor
 struct StatusBadge: View {
     let status: ExecutionStatus
     var compact: Bool = false

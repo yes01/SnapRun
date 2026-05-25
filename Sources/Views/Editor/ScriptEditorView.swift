@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 import TaskTickCore
 
+@MainActor
 struct ScriptEditorView: View {
     @Binding var scriptBody: String
     @State private var showExpandedEditor = false
@@ -39,6 +40,7 @@ struct ScriptEditorView: View {
 
 // MARK: - Expanded Editor
 
+@MainActor
 struct ExpandedScriptEditor: View {
     @Binding var scriptBody: String
     @Environment(\.dismiss) private var dismiss
@@ -67,6 +69,7 @@ struct ExpandedScriptEditor: View {
 
 // MARK: - NSTextView Wrapper
 
+@MainActor
 struct CodeTextEditor: NSViewRepresentable {
     @Binding var text: String
 
