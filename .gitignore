@@ -14,3 +14,4 @@ docs/superpowers/*
 .dev-build/
 .release/
 .worktrees/
+.idea/

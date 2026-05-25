@@ -1,4 +1,5 @@
 #compdef tasktick tasktick-dev
+# Legacy CLI completion retained while the SnapRun rename is phased in.
 
 _tasktick() {
     local -a subcmds
@@ -9,7 +10,7 @@ _tasktick() {
         'run:Start a task'
         'stop:Stop a running task'
         'restart:Restart a task'
-        'reveal:Open task in TaskTick main window'
+        'reveal:Open task in the SnapRun main window'
         'tail:Stream stdout/stderr in real time'
         'wait:Block until a task completes'
     )

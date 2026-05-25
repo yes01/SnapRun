@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "TaskTick",
+    name: "SnapRun",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v14)

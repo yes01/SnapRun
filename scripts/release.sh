@@ -2,16 +2,17 @@
 set -euo pipefail
 
 # ─────────────────────────────────────────────
-# TaskTick Release Script
+# SnapRun Release Script
 # Builds arm64 + x86_64 DMGs and uploads to GitHub Release
 # Usage: ./scripts/release.sh [version]
 #   e.g. ./scripts/release.sh 1.2.0
 # ─────────────────────────────────────────────
 
-APP_NAME="TaskTick"
+APP_NAME="SnapRun"
+# Keep the legacy bundle identifier until the runtime/app-data migration is handled separately.
 BUNDLE_ID="com.lifedever.TaskTick"
-REPO="lifedever/TaskTick"
-GITEE_REPO="lifedever/task-tick"
+REPO="yes01/SnapRun"
+GITEE_REPO="${GITEE_REPO:-}"
 MIN_MACOS="14.0"
 
 # ── Parse version ──
@@ -54,7 +55,7 @@ build_arch() {
 
   # Locate binary (SPM target was renamed to TaskTickApp in Task 0.2 to dodge
   # case-insensitive APFS collision with the lowercase 'tasktick' CLI target;
-  # we copy + rename to TaskTick during the cp into the .app below)
+  # we copy + rename to SnapRun during the cp into the .app below)
   local SPM_TARGET="TaskTickApp"
   local BIN_PATH
   BIN_PATH=$(find "${ARCH_BUILD_DIR}/build" -name "${SPM_TARGET}" -type f -perm +111 | grep -v '\.build\|\.dSYM\|\.bundle' | head -1)
@@ -68,12 +69,12 @@ build_arch() {
   mkdir -p "${APP_BUNDLE}/Contents/MacOS"
   mkdir -p "${APP_BUNDLE}/Contents/Resources"
 
-  # Copy binary (rename TaskTickApp → TaskTick during cp; user-facing name)
+  # Copy binary (rename TaskTickApp → SnapRun during cp; user-facing name)
   cp "${BIN_PATH}" "${APP_BUNDLE}/Contents/MacOS/${APP_NAME}"
 
   # Copy CLI binary to Contents/cli/ — NOT Contents/MacOS/.
   # macOS APFS is case-insensitive by default, so the GUI binary
-  # 'TaskTick' and CLI binary 'tasktick' would collide in MacOS/,
+  # 'SnapRun' and CLI binary 'tasktick' would collide in MacOS/,
   # with the second cp silently overwriting the first → app fails
   # to launch. Cask's `binary` field points here for $PATH symlink.
   local CLI_BIN_PATH
@@ -84,7 +85,7 @@ build_arch() {
     echo "  CLI: tasktick (Contents/cli/)"
   fi
 
-  # Glob-copy ALL *.bundle (TaskTick_TaskTickCore.bundle and any future
+  # Glob-copy ALL *.bundle (including TaskTickCore resources and any future
   # SPM target bundle). Per CLAUDE.md global rule.
   echo "  Bundles:"
   for bundle in $(find "${ARCH_BUILD_DIR}/build" -name "*.bundle" -type d -not -path '*\.dSYM*'); do
@@ -252,7 +253,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
       "${BUILD_DIR}/${APP_NAME}-${VERSION}-arm64.dmg" \
       "${BUILD_DIR}/${APP_NAME}-${VERSION}-x86_64.dmg" \
       --repo "${REPO}" \
-      --title "TaskTick ${TAG}" \
+      --title "SnapRun ${TAG}" \
       --generate-notes
   fi
 
@@ -262,8 +263,12 @@ fi
 
 # ── Upload to Gitee Release ──
 echo ""
-echo "── Publishing to Gitee ${GITEE_REPO} ──"
-if [ -n "${GITEE_TOKEN:-}" ]; then
+if [ -n "${GITEE_REPO}" ]; then
+  echo "── Publishing to Gitee ${GITEE_REPO} ──"
+else
+  echo "── Skipping Gitee publish (set GITEE_REPO to enable) ──"
+fi
+if [ -n "${GITEE_TOKEN:-}" ] && [ -n "${GITEE_REPO}" ]; then
   # Push tag to Gitee
   if git remote get-url gitee >/dev/null 2>&1; then
     git push gitee "${TAG}" 2>/dev/null || echo "  Tag already exists on Gitee"
@@ -276,8 +281,8 @@ if [ -n "${GITEE_TOKEN:-}" ]; then
     -d "{
       \"access_token\": \"${GITEE_TOKEN}\",
       \"tag_name\": \"${TAG}\",
-      \"name\": \"TaskTick ${TAG}\",
-      \"body\": \"## TaskTick ${TAG}\n\n### Download\n- **Apple Silicon (M1/M2/M3/M4)**: TaskTick-${VERSION}-arm64.dmg\n- **Intel**: TaskTick-${VERSION}-x86_64.dmg\",
+      \"name\": \"SnapRun ${TAG}\",
+      \"body\": \"## SnapRun ${TAG}\n\n### Download\n- **Apple Silicon (M1/M2/M3/M4)**: SnapRun-${VERSION}-arm64.dmg\n- **Intel**: SnapRun-${VERSION}-x86_64.dmg\",
       \"target_commitish\": \"main\"
     }")
 
@@ -299,7 +304,7 @@ if [ -n "${GITEE_TOKEN:-}" ]; then
     echo "  Warning: Failed to create Gitee release"
     echo "  Response: ${GITEE_RELEASE_RESP}"
   fi
-else
+elif [ -n "${GITEE_REPO}" ]; then
   echo "  Skipped (no GITEE_TOKEN env var)"
   echo "  To enable: export GITEE_TOKEN=your_gitee_personal_access_token"
 fi

@@ -2,14 +2,15 @@
 set -euo pipefail
 
 # ─────────────────────────────────────────────
-# TaskTick Dev Build Script
+# SnapRun Dev Build Script
 # Builds a dev version that can coexist with the release version
 # Usage: ./scripts/build-dev.sh
 # ─────────────────────────────────────────────
 
-APP_NAME="TaskTick"
-SPM_TARGET="TaskTickApp"  # SPM target name (renamed in Task 0.2 to dodge case collision with lowercase 'tasktick')
-DEV_APP_NAME="TaskTick Dev"
+APP_NAME="SnapRun"
+SPM_TARGET="TaskTickApp"  # Internal SPM target kept for compatibility with the existing source layout.
+DEV_APP_NAME="SnapRun Dev"
+# Keep the legacy bundle identifier until the runtime/app-data migration is handled separately.
 BUNDLE_ID="com.lifedever.TaskTick.dev"
 MIN_MACOS="14.0"
 
@@ -26,7 +27,7 @@ swift build \
   --configuration debug \
   --build-path "${BUILD_DIR}/build"
 
-# Locate binary (SPM target is TaskTickApp; we copy + rename to TaskTick during cp into bundle)
+# Locate binary (SPM target stays TaskTickApp; we copy + rename to SnapRun during cp into bundle)
 BIN_PATH=$(find "${BUILD_DIR}/build" -name "${SPM_TARGET}" -type f -perm +111 | grep -v '\.build\|\.dSYM\|\.bundle' | head -1)
 if [ -z "${BIN_PATH}" ]; then
   echo "Error: Could not find built binary"
