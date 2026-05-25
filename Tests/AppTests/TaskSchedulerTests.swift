@@ -19,9 +19,8 @@ struct TaskSchedulerTests {
     @Test("Every-minute task without scheduledDate computes future nextRunAt")
     @MainActor
     func everyMinuteWithoutScheduledDateComputesNextRun() throws {
-        let container = try SwiftDataTestSupport.makeContainer()
-        let task = SwiftDataTestSupport.makeTask(
-            in: container.mainContext,
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "issue-30",
             scriptBody: "echo hi",
             scheduledDate: nil,
@@ -44,9 +43,8 @@ struct TaskSchedulerTests {
     @Test("Legacy interval task still honors intervalSeconds")
     @MainActor
     func legacyIntervalTaskStillWorks() throws {
-        let container = try SwiftDataTestSupport.makeContainer()
-        let task = SwiftDataTestSupport.makeTask(
-            in: container.mainContext,
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "legacy",
             scriptBody: "echo hi"
         )
@@ -69,9 +67,8 @@ struct TaskSchedulerTests {
     @Test("Shortcut task with repeatType.everyMinute schedules normally")
     @MainActor
     func shortcutTaskRespectsRepeat() throws {
-        let container = try SwiftDataTestSupport.makeContainer()
-        let task = SwiftDataTestSupport.makeTask(
-            in: container.mainContext,
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "shortcut",
             scriptBody: "",
             repeatType: .everyMinute
@@ -94,9 +91,8 @@ struct TaskSchedulerTests {
     @Test("New ScheduledTask has nil shortcutName")
     @MainActor
     func shortcutNameDefaultsToNil() throws {
-        let container = try SwiftDataTestSupport.makeContainer()
-        let task = SwiftDataTestSupport.makeTask(
-            in: container.mainContext,
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "fresh",
             scriptBody: "echo hi"
         )

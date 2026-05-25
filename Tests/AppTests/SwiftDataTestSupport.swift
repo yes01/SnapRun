@@ -3,16 +3,29 @@ import SwiftData
 @testable import TaskTickCore
 
 @MainActor
-enum SwiftDataTestSupport {
-    static func makeContainer() throws -> ModelContainer {
+final class SwiftDataTestFixture {
+    let storeURL: URL
+    let container: ModelContainer
+
+    init() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("tasktick-app-test-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        self.storeURL = directory.appendingPathComponent("default.store")
+
         let schema = Schema([ScheduledTask.self, ExecutionLog.self])
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-        return try ModelContainer(for: schema, configurations: [configuration])
+        let configuration = ModelConfiguration(schema: schema, url: storeURL, allowsSave: true)
+        self.container = try ModelContainer(for: schema, configurations: [configuration])
     }
 
+    deinit {
+        try? FileManager.default.removeItem(at: storeURL.deletingLastPathComponent())
+    }
+
+    var context: ModelContext { container.mainContext }
+
     @discardableResult
-    static func makeTask(
-        in context: ModelContext,
+    func makeTask(
         name: String = "",
         scriptBody: String = "",
         shell: String = "/bin/zsh",
