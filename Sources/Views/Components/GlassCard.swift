@@ -2,6 +2,7 @@ import SwiftUI
 
 /// A card component with glass material effect.
 /// Uses liquid glass on macOS 26+, falls back to themed material on older versions.
+@MainActor
 struct GlassCard<Content: View>: View {
     var padding: CGFloat = 16
     let content: Content
