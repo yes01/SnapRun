@@ -9,7 +9,7 @@ struct ScriptExecutorTests {
     @MainActor
     func executorExists() {
         let executor = ScriptExecutor.shared
-        #expect(executor != nil)
+        #expect(executor === ScriptExecutor.shared)
     }
 
     /// Reproduces the ipcheck output-truncation bug: runs the same ipcheck

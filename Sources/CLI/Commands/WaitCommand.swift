@@ -1,5 +1,5 @@
 import ArgumentParser
-import Foundation
+@preconcurrency import Foundation
 import TaskTickCore
 
 struct WaitCommand: AsyncParsableCommand {
@@ -57,26 +57,25 @@ struct WaitCommand: AsyncParsableCommand {
         let timeoutSeconds = timeout
 
         let exitCode: Int32 = try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Int32, Error>) in
-            var observer: NSObjectProtocol?
-            var timeoutWork: DispatchWorkItem?
+            let runtime = CommandRuntime()
 
-            observer = center.addObserver(forName: completedName, object: nil, queue: .main) { note in
+            let observer = center.addObserver(forName: completedName, object: nil, queue: .main) { note in
                 guard let id = note.userInfo?["id"] as? String, id == targetId else { return }
                 let exit = (note.userInfo?["exitCode"] as? Int) ?? 0
-                if let o = observer { center.removeObserver(o) }
-                timeoutWork?.cancel()
+                guard runtime.finish(center: center) else { return }
                 let durMs = Int(Date().timeIntervalSince(startedAt) * 1000)
                 printResult(name: taskName, exitCode: exit, durationMs: durMs, json: useJSON)
                 cont.resume(returning: Int32(exit))
             }
+            runtime.addObserver(observer)
 
             if timeoutSeconds > 0 {
                 let work = DispatchWorkItem {
-                    if let o = observer { center.removeObserver(o) }
+                    guard runtime.finish(center: center) else { return }
                     FileHandle.standardError.write(Data("tasktick: timed out after \(timeoutSeconds)s\n".utf8))
                     cont.resume(throwing: ExitCode(124))
                 }
-                timeoutWork = work
+                runtime.addWorkItem(work)
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(timeoutSeconds), execute: work)
             }
         }

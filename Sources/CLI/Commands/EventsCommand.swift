@@ -1,5 +1,5 @@
 import ArgumentParser
-import Foundation
+@preconcurrency import Foundation
 import TaskTickCore
 
 struct EventsCommand: AsyncParsableCommand {
@@ -28,22 +28,24 @@ struct EventsCommand: AsyncParsableCommand {
         termSrc.setEventHandler { Foundation.exit(0) }
         termSrc.resume()
 
-        let isoFormatter = ISO8601DateFormatter()
+        let fallbackTimestamp: @Sendable () -> String = {
+            ISO8601DateFormatter().string(from: Date())
+        }
 
-        let onStarted: (Notification) -> Void = { note in
+        let onStarted: @Sendable (Notification) -> Void = { note in
             guard let info = note.userInfo,
                   let id = info["id"] as? String else { return }
             let executionId = (info["executionId"] as? String) ?? ""
-            let ts = (info["startedAt"] as? String) ?? isoFormatter.string(from: Date())
+            let ts = (info["startedAt"] as? String) ?? fallbackTimestamp()
             let line = Self.formatStartedLine(id: id, executionId: executionId, ts: ts)
             try? stdout.write(contentsOf: Data(line.utf8))
         }
-        let onCompleted: (Notification) -> Void = { note in
+        let onCompleted: @Sendable (Notification) -> Void = { note in
             guard let info = note.userInfo,
                   let id = info["id"] as? String else { return }
             let executionId = (info["executionId"] as? String) ?? ""
             let exitCode = (info["exitCode"] as? Int) ?? 0
-            let ts = (info["endedAt"] as? String) ?? isoFormatter.string(from: Date())
+            let ts = (info["endedAt"] as? String) ?? fallbackTimestamp()
             let line = Self.formatCompletedLine(id: id, executionId: executionId, exitCode: exitCode, ts: ts)
             try? stdout.write(contentsOf: Data(line.utf8))
         }
