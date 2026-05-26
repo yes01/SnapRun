@@ -1,5 +1,5 @@
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 enum TaskResolverError: Error, CustomStringConvertible {
     case noMatch(String)

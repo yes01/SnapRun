@@ -1,7 +1,7 @@
 import Testing
 import Foundation
-@testable import TaskTickApp
-@testable import TaskTickCore
+@testable import SnapRunApp
+@testable import SnapRunCore
 
 @Suite("TaskScheduler Tests")
 struct TaskSchedulerTests {

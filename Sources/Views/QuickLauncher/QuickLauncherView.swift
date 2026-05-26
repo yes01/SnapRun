@@ -1,6 +1,6 @@
 import SwiftUI
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Spotlight-style search panel content. Lists matching tasks and runs the
 /// selected one when the user hits Enter.

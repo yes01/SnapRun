@@ -1,10 +1,10 @@
 import SwiftUI
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 @MainActor
 @main
-struct TaskTickApp: App {
+struct SnapRunApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var scheduler = TaskScheduler.shared
     @StateObject private var updateChecker = UpdateChecker.shared
@@ -355,8 +355,8 @@ struct TaskTickApp: App {
         }
 
         CommandGroup(replacing: .help) {
-            Link(L10n.tr("command.github_home"), destination: URL(string: "https://github.com/lifedever/TaskTick")!)
-            Link(L10n.tr("command.report_issue"), destination: URL(string: "https://github.com/lifedever/TaskTick/issues")!)
+            Link(L10n.tr("command.github_home"), destination: URL(string: "https://github.com/yes01/SnapRun")!)
+            Link(L10n.tr("command.report_issue"), destination: URL(string: "https://github.com/yes01/SnapRun/issues")!)
         }
     }
 
@@ -372,8 +372,8 @@ struct TaskTickApp: App {
         }
 
         let task = ScheduledTask(
-            name: "Hello TaskTick",
-            scriptBody: "echo \"Hello from TaskTick! 🎉\"\necho \"Current time: $(date)\"\necho \"Host: $(hostname)\"",
+            name: "Hello SnapRun",
+            scriptBody: "echo \"Hello from SnapRun! 🎉\"\necho \"Current time: $(date)\"\necho \"Host: $(hostname)\"",
             shell: "/bin/zsh",
             scheduledDate: Date(),
             repeatType: .everyMinute,

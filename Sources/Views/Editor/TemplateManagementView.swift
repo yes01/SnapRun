@@ -1,5 +1,5 @@
 import SwiftUI
-import TaskTickCore
+import SnapRunCore
 
 @MainActor
 struct TemplateManagementView: View {

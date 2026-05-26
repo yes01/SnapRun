@@ -1,5 +1,5 @@
 import XCTest
-@testable import tasktick
+@testable import snaprun
 
 final class TaskDTOTests: XCTestCase {
     func testEncodesTaskWithAllFields() throws {

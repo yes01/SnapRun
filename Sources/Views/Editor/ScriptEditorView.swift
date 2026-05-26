@@ -1,6 +1,6 @@
 import SwiftUI
 import AppKit
-import TaskTickCore
+import SnapRunCore
 
 @MainActor
 struct ScriptEditorView: View {

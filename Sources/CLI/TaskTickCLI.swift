@@ -1,13 +1,13 @@
 import AppKit
 import ArgumentParser
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 @main
-struct TaskTickCLI: AsyncParsableCommand {
+struct SnapRunCLI: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "tasktick",
-        abstract: "Control TaskTick scheduled tasks from the command line.",
+        commandName: "snaprun",
+        abstract: "Control SnapRun scheduled tasks from the command line.",
         version: "0.1.0",
         subcommands: [
             ListCommand.self,
@@ -28,7 +28,7 @@ struct TaskTickCLI: AsyncParsableCommand {
     /// Override default ArgumentParser entry to hide the Dock icon before
     /// any AppKit code runs. The CLI binary lives inside `.app/Contents/MacOS/`,
     /// which makes macOS treat each invocation as a foreground GUI app
-    /// — every `tasktick list` / `tasktick events` call would otherwise
+    /// — every `snaprun list` / `snaprun events` call would otherwise
     /// pop a clock icon in the Dock. `.prohibited` keeps it backgrounded.
     static func main() async {
         NSApplication.shared.setActivationPolicy(.prohibited)

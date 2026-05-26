@@ -1,6 +1,6 @@
 import ArgumentParser
 @preconcurrency import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct WaitCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -31,7 +31,7 @@ struct WaitCommand: AsyncParsableCommand {
         do {
             task = try resolver.resolve(identifier)
         } catch let err as TaskResolverError {
-            FileHandle.standardError.write(Data("tasktick: \(err)\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: \(err)\n".utf8))
             throw ExitCode(1)
         }
 
@@ -72,7 +72,7 @@ struct WaitCommand: AsyncParsableCommand {
             if timeoutSeconds > 0 {
                 let work = DispatchWorkItem {
                     guard runtime.finish(center: center) else { return }
-                    FileHandle.standardError.write(Data("tasktick: timed out after \(timeoutSeconds)s\n".utf8))
+                    FileHandle.standardError.write(Data("snaprun: timed out after \(timeoutSeconds)s\n".utf8))
                     cont.resume(throwing: ExitCode(124))
                 }
                 runtime.addWorkItem(work)

@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Distributed Notification helpers. Only post + observe primitives — the
 /// command-specific logic stays in each Command class.
@@ -12,9 +12,9 @@ enum NotificationBridge {
 
         var notificationName: Notification.Name {
             // Dynamic per-bundle so the dev CLI (Bundle.main =
-            // com.lifedever.TaskTick.dev) posts to the dev GUI listener
+            // com.lifedever.SnapRun.dev) posts to the dev GUI listener
             // and not the release GUI's. Falls back to release ID when run
-            // outside any .app (e.g. .build/debug/tasktick).
+            // outside any .app (e.g. .build/debug/snaprun).
             let bundleId = BundleContext.bundleID
             return Notification.Name("\(bundleId).cli.\(rawValue)")
         }

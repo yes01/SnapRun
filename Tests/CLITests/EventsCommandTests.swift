@@ -1,6 +1,6 @@
 import XCTest
 import Foundation
-@testable import tasktick
+@testable import snaprun
 
 final class EventsCommandTests: XCTestCase {
 

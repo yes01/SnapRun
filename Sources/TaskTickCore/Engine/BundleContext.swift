@@ -4,8 +4,8 @@ import Foundation
 ///
 /// `Bundle.main.bundleIdentifier` works for the GUI process and for CLI
 /// binaries invoked by their direct .app/Contents/MacOS/ path. But when the
-/// CLI is invoked via a symlink (e.g. `/opt/homebrew/bin/tasktick-dev` →
-/// `/Applications/TaskTick Dev.app/Contents/MacOS/tasktick-dev`),
+/// CLI is invoked via a symlink (e.g. `/opt/homebrew/bin/snaprun-dev` →
+/// `/Applications/SnapRun Dev.app/Contents/MacOS/tasktick-dev`),
 /// `Bundle.main.bundleIdentifier` returns nil — symlink resolution doesn't
 /// kick in, and there's no Info.plist co-located with the .build/debug
 /// binary or the symlink in /opt/homebrew/bin.
@@ -20,7 +20,7 @@ public enum BundleContext {
     /// 1. `Bundle.main.bundleIdentifier` (works for GUI + direct-path CLI)
     /// 2. Walk the resolved executable path up to find the nearest `.app`
     ///    ancestor and read its `Contents/Info.plist`'s `CFBundleIdentifier`
-    /// 3. Fallback `"com.lifedever.TaskTick"` (release default — only hits
+    /// 3. Fallback `"com.lifedever.SnapRun"` (release default — only hits
     ///    when the CLI is run from a build dir without an enclosing .app)
     public static var bundleID: String {
         if let id = Bundle.main.bundleIdentifier {
@@ -29,7 +29,7 @@ public enum BundleContext {
         if let id = bundleIDFromEnclosingApp() {
             return id
         }
-        return "com.lifedever.TaskTick"
+        return "com.lifedever.SnapRun"
     }
 
     /// True if the resolved bundle ID corresponds to the dev variant.

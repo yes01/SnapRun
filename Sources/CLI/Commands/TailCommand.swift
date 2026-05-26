@@ -1,6 +1,6 @@
 import ArgumentParser
 @preconcurrency import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct TailCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -27,7 +27,7 @@ struct TailCommand: AsyncParsableCommand {
         do {
             task = try resolver.resolve(identifier)
         } catch let err as TaskResolverError {
-            FileHandle.standardError.write(Data("tasktick: \(err)\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: \(err)\n".utf8))
             throw ExitCode(1)
         }
 
@@ -35,7 +35,7 @@ struct TailCommand: AsyncParsableCommand {
         // to stream.
         let runningIds = NotificationBridge.runningTaskIds(store: store)
         guard runningIds.contains(task.id) else {
-            FileHandle.standardError.write(Data("tasktick: \(task.name) is not running\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: \(task.name) is not running\n".utf8))
             throw ExitCode(1)
         }
 

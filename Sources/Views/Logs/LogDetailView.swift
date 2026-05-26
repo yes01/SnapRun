@@ -1,6 +1,6 @@
 import SwiftUI
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 @MainActor
 struct LogDetailView: View {

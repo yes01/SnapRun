@@ -1,6 +1,6 @@
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Strip ANSI escape sequences and terminal control codes.
 /// Safe for plain text — only removes invisible control characters.
@@ -164,7 +164,7 @@ final class ScriptExecutor: ObservableObject {
         LiveOutputManager.shared.startTracking(taskId: taskId)
 
         // Manual scripts (dev servers, on-demand jobs) optionally tee their
-        // output to ~/Library/Logs/TaskTick/<slug>.log so the user can
+        // output to ~/Library/Logs/SnapRun/<slug>.log so the user can
         // `tail -f` from a terminal or drop the file into Console.app.
         // Scheduled jobs are excluded — short bursty runs would just churn
         // the file and the database log already covers their needs.
@@ -319,7 +319,7 @@ final class ScriptExecutor: ObservableObject {
             // waitUntilExit returns; adopted entries have no such await
             // loop (launchd is the parent, not us). Write the terminal
             // state here so the UI stops showing the task as running.
-            finalizeAdoptedLog(taskId: taskId, pid: adoptedPID, reason: "[TaskTick] Adopted process \(adoptedPID) was stopped by user.")
+            finalizeAdoptedLog(taskId: taskId, pid: adoptedPID, reason: "[SnapRun] Adopted process \(adoptedPID) was stopped by user.")
         }
     }
 
@@ -327,7 +327,7 @@ final class ScriptExecutor: ObservableObject {
     /// terminal state. Used after we signal an adopted process — we don't
     /// have a `Process.waitUntilExit` to flush the log row for us.
     private func finalizeAdoptedLog(taskId: UUID, pid: Int32, reason: String) {
-        let ctx = TaskTickApp._sharedModelContainer.mainContext
+        let ctx = SnapRunApp._sharedModelContainer.mainContext
         let runningRaw = ExecutionStatus.running.rawValue
         let descriptor = FetchDescriptor<ExecutionLog>(
             predicate: #Predicate { $0.statusRaw == runningRaw && $0.task?.id == taskId }
@@ -387,7 +387,7 @@ final class ScriptExecutor: ObservableObject {
     /// AppDelegate's same-singleton access pattern) so we don't have to
     /// thread a non-Sendable `ModelContext` through cross-actor closures.
     private func persistRunningPID(logId: UUID, pid: Int32, startTime: String?) {
-        let ctx = TaskTickApp._sharedModelContainer.mainContext
+        let ctx = SnapRunApp._sharedModelContainer.mainContext
         let desc = FetchDescriptor<ExecutionLog>(predicate: #Predicate { $0.id == logId })
         if let live = try? ctx.fetch(desc).first {
             live.pid = pid

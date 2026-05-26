@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import TaskTickApp
+@testable import SnapRunApp
 
 @Suite("ScriptExecutor Tests")
 struct ScriptExecutorTests {

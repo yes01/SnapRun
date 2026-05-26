@@ -15,7 +15,7 @@ public enum L10n {
     /// `Bundle.module` as a last resort; instead we fall back to `Bundle.main`
     /// (which never crashes, even if it can't load any strings).
     private static let _resourceBundle: Bundle = {
-        let bundleName = "TaskTick_TaskTickCore.bundle"
+        let bundleName = "SnapRun_SnapRunCore.bundle"
         let candidates: [URL] = [
             // 1. App root (alongside Contents/) — standard SPM placement
             Bundle.main.bundleURL.appendingPathComponent(bundleName),

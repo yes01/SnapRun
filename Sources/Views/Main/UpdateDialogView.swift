@@ -1,6 +1,6 @@
 import SwiftUI
 import WebKit
-import TaskTickCore
+import SnapRunCore
 
 // MARK: - Markdown WebView
 

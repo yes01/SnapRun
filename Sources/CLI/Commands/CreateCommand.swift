@@ -1,6 +1,6 @@
 import ArgumentParser
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct CreateCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -47,13 +47,13 @@ struct CreateCommand: AsyncParsableCommand {
         var isDir: ObjCBool = false
         guard FileManager.default.fileExists(atPath: scriptPath, isDirectory: &isDir),
               !isDir.boolValue else {
-            FileHandle.standardError.write(Data("tasktick: script not found or is a directory: \(script)\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: script not found or is a directory: \(script)\n".utf8))
             throw ExitCode(1)
         }
 
         // 2. Mutually-exclusive scheduling flags
         if manual && (repeatType != nil || at != nil) {
-            FileHandle.standardError.write(Data("tasktick: --manual is mutually exclusive with --repeat/--at\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: --manual is mutually exclusive with --repeat/--at\n".utf8))
             throw ExitCode(1)
         }
 
@@ -65,7 +65,7 @@ struct CreateCommand: AsyncParsableCommand {
             if let match = RepeatType.allCases.first(where: { $0.rawValue.lowercased() == r.lowercased() }) {
                 repeatRaw = match.rawValue
             } else {
-                FileHandle.standardError.write(Data("tasktick: invalid --repeat value: \(r)\n".utf8))
+                FileHandle.standardError.write(Data("snaprun: invalid --repeat value: \(r)\n".utf8))
                 throw ExitCode(1)
             }
         } else {
@@ -84,7 +84,7 @@ struct CreateCommand: AsyncParsableCommand {
                   let minute = Int(parts[1]),
                   (0..<24).contains(hour),
                   (0..<60).contains(minute) else {
-                FileHandle.standardError.write(Data("tasktick: invalid --at format (expected HH:MM): \(atStr)\n".utf8))
+                FileHandle.standardError.write(Data("snaprun: invalid --at format (expected HH:MM): \(atStr)\n".utf8))
                 throw ExitCode(1)
             }
             let calendar = Calendar.current
@@ -123,7 +123,7 @@ struct CreateCommand: AsyncParsableCommand {
         if !GUILauncher.isRunning() {
             let ok = GUILauncher.launchAndWait()
             if !ok {
-                FileHandle.standardError.write(Data("tasktick: TaskTick.app failed to launch within 10s\n".utf8))
+                FileHandle.standardError.write(Data("snaprun: SnapRun.app failed to launch within 10s\n".utf8))
                 throw ExitCode(1)
             }
             // Give the GUI a moment to finish configuring CLIBridge observers.
@@ -147,7 +147,7 @@ struct CreateCommand: AsyncParsableCommand {
             }
         }
 
-        FileHandle.standardError.write(Data("tasktick: GUI didn't acknowledge create within 5s\n".utf8))
+        FileHandle.standardError.write(Data("snaprun: GUI didn't acknowledge create within 5s\n".utf8))
         throw ExitCode(1)
     }
 

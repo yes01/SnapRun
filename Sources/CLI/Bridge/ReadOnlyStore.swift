@@ -1,9 +1,9 @@
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Read-only wrapper around a SwiftData ModelContainer. CLI commands use this
-/// to query the same store TaskTick.app writes to without ever risking a
+/// to query the same store SnapRun.app writes to without ever risking a
 /// concurrent write from the CLI side.
 @MainActor
 final class ReadOnlyStore {

@@ -1,6 +1,6 @@
 import Foundation
 import SwiftData
-@testable import TaskTickCore
+@testable import SnapRunCore
 
 @MainActor
 final class SwiftDataTestFixture {
@@ -15,7 +15,7 @@ final class SwiftDataTestFixture {
     init() throws {
         // Provide a stable-looking URL even though storage is in-memory.
         self.storeURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("tasktick-app-test-\(UUID().uuidString)")
+            .appendingPathComponent("snaprun-app-test-\(UUID().uuidString)")
             .appendingPathComponent("default.store")
 
         let schema = Schema([ScheduledTask.self, ExecutionLog.self])

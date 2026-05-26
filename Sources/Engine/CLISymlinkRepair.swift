@@ -1,13 +1,13 @@
 import AppKit
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
-/// Launch-time check + repair for the user's `tasktick` symlink.
+/// Launch-time check + repair for the user's `snaprun` symlink.
 ///
 /// Background: v1.8.0/1.8.1 release scripts placed the CLI binary at
 /// `.app/Contents/MacOS/tasktick`, which silently collided with the GUI
 /// binary `TaskTick` on default case-insensitive APFS. v1.8.2 moves the
-/// CLI to `Contents/cli/tasktick`, but DMG users who already ran the
+/// CLI to `Contents/cli/snaprun`, but DMG users who already ran the
 /// "Enable CLI" flow on a prior version are left with a symlink pointing
 /// at the old (now nonexistent or wrong) path. This module detects that
 /// state on app launch and offers a one-click in-place repair via
@@ -17,10 +17,10 @@ import TaskTickCore
 enum CLISymlinkRepair {
 
     /// Standard PATH locations where the user might have installed the
-    /// `tasktick` symlink. Apple-Silicon Homebrew first.
+    /// `snaprun` symlink. Apple-Silicon Homebrew first.
     private static let candidatePaths = [
-        "/opt/homebrew/bin/tasktick",
-        "/usr/local/bin/tasktick"
+        "/opt/homebrew/bin/snaprun",
+        "/usr/local/bin/snaprun"
     ]
 
     /// Run on `applicationDidFinishLaunching`. No-op for dev builds and
@@ -30,7 +30,7 @@ enum CLISymlinkRepair {
 
         // The CLI inside the running .app — what the symlink should resolve to.
         let expected = Bundle.main.bundleURL
-            .appendingPathComponent("Contents/cli/tasktick")
+            .appendingPathComponent("Contents/cli/snaprun")
             .path
         guard FileManager.default.fileExists(atPath: expected) else {
             // CLI not bundled (e.g. swift run directly) — nothing to repair against.

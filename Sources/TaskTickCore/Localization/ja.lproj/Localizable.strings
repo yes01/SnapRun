@@ -1,5 +1,5 @@
 /* App */
-"app.name" = "TaskTick";
+"app.name" = "SnapRun";
 
 /* Menu Bar */
 "menubar.open" = "開く";
@@ -200,7 +200,7 @@
 "notification.succeeded" = "成功";
 "notification.failed" = "失敗";
 "notification.denied.title" = "通知が無効です";
-"notification.denied.message" = "TaskTick はタスクの実行結果を通知したいのですが、システム設定で通知がオフになっています。タスクの通知を受け取るには再度有効にしてください。";
+"notification.denied.message" = "SnapRun はタスクの実行結果を通知したいのですが、システム設定で通知がオフになっています。タスクの通知を受け取るには再度有効にしてください。";
 "notification.denied.open_settings" = "システム設定を開く";
 "notification.denied.later" = "後で";
 
@@ -234,7 +234,7 @@
 "toast.log.cleared" = "古いログをクリーンアップしました";
 
 /* Quit confirmation */
-"quit.confirm.title" = "TaskTick を終了しますか？";
+"quit.confirm.title" = "SnapRun を終了しますか？";
 "quit.confirm.message" = "%d 件のスクリプトがまだ実行中です。終了するとただちに停止されます:";
 "quit.confirm.cancel" = "キャンセル";
 "quit.confirm.quit" = "終了して停止";
@@ -242,7 +242,7 @@
 /* Live log file (manual tasks) */
 "settings.logs.streaming" = "リアルタイムログファイル";
 "settings.logs.stream_to_file" = "手動タスクの出力をファイルに書き込む";
-"settings.logs.stream_to_file.hint" = "各手動タスクの最新の実行結果が ~/Library/Logs/TaskTick/<タスク名>.log に書き出されるため、ターミナルから tail -f したり Console.app で開いたりできます。実行のたびに前回の内容は上書きされます。";
+"settings.logs.stream_to_file.hint" = "各手動タスクの最新の実行結果が ~/Library/Logs/SnapRun/<タスク名>.log に書き出されるため、ターミナルから tail -f したり Console.app で開いたりできます。実行のたびに前回の内容は上書きされます。";
 "settings.logs.reveal_directory" = "Finder で表示";
 "task.detail.live_log_file" = "リアルタイムログファイル";
 "task.detail.live_log.reveal" = "Finder で表示";
@@ -362,18 +362,18 @@
 "settings.updates.check_now" = "今すぐ確認";
 "settings.updates.new_version" = "新しいバージョンが利用可能: %@";
 
-"settings.about" = "TaskTickについて";
-"settings.about.section" = "TaskTickについて";
+"settings.about" = "SnapRunについて";
+"settings.about.section" = "SnapRunについて";
 "settings.about.version" = "バージョン";
 "settings.about.build" = "ビルド";
 "settings.about.github" = "GitHubリポジトリ";
 "settings.about.issues" = "問題を報告";
 "settings.about.sponsor" = "スポンサー";
 "settings.about.copyright" = "© 2026 lifedever. GPL-3.0 License.";
-"settings.about.description" = "スケジュールタスクを管理するネイティブmacOSアプリ。crontabもlaunchdも不要 — TaskTickだけ。";
+"settings.about.description" = "スケジュールタスクを管理するネイティブmacOSアプリ。crontabもlaunchdも不要 — SnapRunだけ。";
 
 /* Commands */
-"command.about" = "TaskTickについて";
+"command.about" = "SnapRunについて";
 "command.check_updates" = "アップデートを確認...";
 "command.new_task" = "新規タスク";
 "command.import" = "タスクをインポート...";
@@ -404,7 +404,7 @@
 /* Crontab Import */
 "command.import_crontab" = "システムCrontabからインポート...";
 "crontab.import.title" = "Crontabからインポート";
-"crontab.import.description" = "TaskTickのタスクとしてインポートするcrontabエントリを選択してください。";
+"crontab.import.description" = "SnapRunのタスクとしてインポートするcrontabエントリを選択してください。";
 "crontab.import.empty" = "Crontabエントリなし";
 "crontab.import.empty_description" = "システムcrontabにアクティブなエントリが見つかりませんでした。";
 "crontab.import.select_all" = "すべて選択";
@@ -417,12 +417,12 @@
 "crontab.comment.no" = "そのまま";
 
 /* Update Dialog */
-"update.available.title" = "TaskTickの新しいバージョンが利用可能です！";
-"update.available.message" = "TaskTick %@が利用可能です（現在%@）。今すぐダウンロードしますか？";
+"update.available.title" = "SnapRunの新しいバージョンが利用可能です！";
+"update.available.message" = "SnapRun %@が利用可能です（現在%@）。今すぐダウンロードしますか？";
 "update.skip" = "このバージョンをスキップ";
 "update.remind_later" = "後で通知";
 "update.install" = "アップデートをインストール";
-"update.downloading.title" = "TaskTickをアップデート中";
+"update.downloading.title" = "SnapRunをアップデート中";
 "update.downloading" = "アップデートをダウンロード中...";
 "update.ready" = "インストール準備完了";
 "update.install_restart" = "インストールして再起動";
@@ -430,7 +430,7 @@
 "update.check_failed" = "アップデートの確認に失敗しました";
 "update.check_failed.hint" = "アップデートサーバーに接続できません。ネットワーク接続を確認して再度お試しください。";
 "update.no_updates" = "最新の状態です！";
-"update.no_updates.message" = "TaskTick %@は最新バージョンです。";
+"update.no_updates.message" = "SnapRun %@は最新バージョンです。";
 "update.download_error" = "ダウンロードに失敗しました";
 "update.dmg_error" = "アップデートに失敗しました";
 "update.dmg_error.message" = "ダウンロードしたディスクイメージが破損しています。もう一度アップデートをダウンロードしてください。";
@@ -445,7 +445,7 @@
 "error.export_failed.message" = "エクスポートファイルを書き込めませんでした:\n%@";
 "error.import_failed.title" = "インポートに失敗しました";
 "error.import_read_failed" = "選択したファイルを読み込めませんでした:\n%@";
-"error.import_decode_failed" = "ファイルが有効な TaskTick エクスポートではないようです:\n%@";
+"error.import_decode_failed" = "ファイルが有効な SnapRun エクスポートではないようです:\n%@";
 "error.import_save_failed" = "インポートしたタスクを保存できませんでした:\n%@";
 "error.delete_failed.title" = "削除できませんでした";
 "error.delete_failed.message" = "項目は表示から削除されましたが、変更を保存できませんでした。再起動後に再表示される可能性があります。\n\n%@";
@@ -489,11 +489,11 @@
 "editor.shortcut.open_app" = "ショートカット App を開く";
 "editor.shortcut.retry" = "再試行";
 "editor.shortcut.refresh" = "リストを更新";
-"editor.shortcut.hint" = "TaskTick は `shortcuts run` 経由で実行します。";
+"editor.shortcut.hint" = "SnapRun は `shortcuts run` 経由で実行します。";
 "editor.shortcut.load_failed" = "ショートカットの読み込みに失敗しました。";
 "editor.shortcut.placeholder" = "ショートカットを選択";
 "task.detail.shortcut" = "ショートカット";
-"task.detail.shortcut.hint" = "TaskTick は `shortcuts run` 経由で実行します。";
+"task.detail.shortcut.hint" = "SnapRun は `shortcuts run` 経由で実行します。";
 
 /* Default Template Names & Notes */
 "default_template.category.database" = "データベースバックアップ";
@@ -550,32 +550,32 @@
 
 /* Settings → Command Line */
 "settings.cli.section.title" = "コマンドライン";
-"settings.cli.description" = "ターミナルで `tasktick` コマンドを有効にして、スクリプトや Raycast から TaskTick を操作できます。";
+"settings.cli.description" = "ターミナルで `snaprun` コマンドを有効にして、スクリプトや Raycast から SnapRun を操作できます。";
 "settings.cli.enable_button" = "CLI を有効化…";
 "settings.cli.installed" = "%@ にリンク済み";
 "settings.cli.not_installed" = "未インストール";
-"settings.cli.install.alert.title" = "tasktick CLI を有効化";
-"settings.cli.install.alert.message" = "ターミナルで次のコマンドを実行して `tasktick` CLI を有効にしてください:\n\n%@";
+"settings.cli.install.alert.title" = "snaprun CLI を有効化";
+"settings.cli.install.alert.message" = "ターミナルで次のコマンドを実行して `snaprun` CLI を有効にしてください:\n\n%@";
 "settings.cli.install.alert.copy" = "コマンドをコピー";
 "settings.cli.install.alert.open_terminal" = "ターミナルを開く";
 "settings.cli.install.alert.cancel" = "キャンセル";
 "settings.cli.uninstall_button" = "CLI をアンインストール…";
-"settings.cli.uninstall.alert.title" = "tasktick CLI をアンインストール";
-"settings.cli.uninstall.alert.message" = "ターミナルで次のコマンドを実行して `tasktick` CLI のシンボリックリンクを削除してください:\n\n%@";
+"settings.cli.uninstall.alert.title" = "snaprun CLI をアンインストール";
+"settings.cli.uninstall.alert.message" = "ターミナルで次のコマンドを実行して `snaprun` CLI のシンボリックリンクを削除してください:\n\n%@";
 
 /* Action Toast (Run/Stop/Restart banners) */
 "toast.action.started" = "開始しました";
 "toast.action.stopped" = "停止しました";
 "toast.action.restarted" = "再起動しました";
 "toast.action.failed" = "操作に失敗しました";
-"toast.action.failed.notReady" = "TaskTick は起動中です";
+"toast.action.failed.notReady" = "SnapRun は起動中です";
 "toast.action.failed.taskNotFound" = "タスクが見つかりません";
 
-"cli.repair.title" = "tasktick CLI のリンクを更新";
+"cli.repair.title" = "snaprun CLI のリンクを更新";
 "cli.repair.message" = "%@ は古い CLI パスを指しています。今すぐ更新しますか？（管理者権限が必要）";
 "cli.repair.update_button" = "今すぐ更新";
 "cli.repair.later_button" = "後で";
-"cli.repair.success.title" = "tasktick CLI を更新しました";
+"cli.repair.success.title" = "snaprun CLI を更新しました";
 "cli.repair.success.message" = "%@ は新しい CLI バイナリを指しています。";
 
 /* Time */

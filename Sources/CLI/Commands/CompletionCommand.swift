@@ -1,6 +1,6 @@
 import ArgumentParser
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 /// Hidden subcommand invoked by the generated zsh/bash/fish completion
 /// scripts to fetch dynamic task name candidates.

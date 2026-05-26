@@ -1,6 +1,6 @@
 import ArgumentParser
 @preconcurrency import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct EventsCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(

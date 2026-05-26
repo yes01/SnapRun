@@ -1,5 +1,5 @@
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 /// Shared state for the task editor window.
 @MainActor

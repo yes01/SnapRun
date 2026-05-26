@@ -1,7 +1,7 @@
 import AppKit
 import SwiftData
 import SwiftUI
-import TaskTickCore
+import SnapRunCore
 
 /// Show a modal warning alert for a non-fatal error. Use at sites where we previously
 /// swallowed errors with `try?` and the user needs to know the action didn't take effect.
@@ -46,7 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // needs the container BEFORE the hotkey can fire (otherwise the panel
         // would open with no @Query data source).
         Task { @MainActor in
-            QuickLauncherController.shared.configure(modelContainer: TaskTickApp._sharedModelContainer)
+            QuickLauncherController.shared.configure(modelContainer: SnapRunApp._sharedModelContainer)
             QuickLauncherSettings.shared.applyToHotkey()
             // Spawn macOS's CursorUIViewService now so it's already warm
             // when the user later opens QL. Without this, the first
@@ -76,7 +76,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// Catch SIGTERM / SIGINT / SIGHUP so the shutdown path runs on those too.
-    /// AppKit doesn't install signal handlers by default — `pkill TaskTick`,
+    /// AppKit doesn't install signal handlers by default — `pkill SnapRun`,
     /// `kill <pid>`, terminal Ctrl+C, etc. would otherwise drop the process
     /// instantly, leaving spawned scripts re-parented to launchd as orphans
     /// (the exact "zombie task" behavior that fired this fix). SIGKILL we
@@ -107,7 +107,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         TaskScheduler.shared.stop()
         TaskScheduler.shared.stopAdoptionPoll()
         do {
-            try TaskTickApp._sharedModelContainer.mainContext.save()
+            try SnapRunApp._sharedModelContainer.mainContext.save()
         } catch {
             NSLog("⚠️ Final save on shutdown failed: \(error.localizedDescription)")
         }
@@ -115,7 +115,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // If the update installer replaces the .app right after this, a -wal left
         // behind can be orphaned and its contents lost. Force a checkpoint now so
         // the main store is self-contained.
-        StoreHardener.checkpoint(at: TaskTickApp._storeURL)
+        StoreHardener.checkpoint(at: SnapRunApp._storeURL)
     }
 
     /// Surface the SwiftUI main window. SwiftUI's `Window(id:)` destroys its
@@ -148,7 +148,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     ///      mark in runningTaskIDs so the UI lights up correctly.
     @MainActor
     private func cleanupStaleRunningLogs() {
-        let context = TaskTickApp._sharedModelContainer.mainContext
+        let context = SnapRunApp._sharedModelContainer.mainContext
         let runningRaw = ExecutionStatus.running.rawValue
         let descriptor = FetchDescriptor<ExecutionLog>(
             predicate: #Predicate { $0.statusRaw == runningRaw }
@@ -179,7 +179,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     log.durationMs = Int(now.timeIntervalSince(log.startedAt) * 1000)
                 }
                 if (log.stderr ?? "").isEmpty {
-                    log.stderr = "[TaskTick] Process \(pid) exited while the app was not running. Exit code unknown."
+                    log.stderr = "[SnapRun] Process \(pid) exited while the app was not running. Exit code unknown."
                 }
                 cancelled += 1
                 continue
@@ -194,7 +194,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     log.durationMs = Int(now.timeIntervalSince(log.startedAt) * 1000)
                 }
                 if (log.stderr ?? "").isEmpty {
-                    log.stderr = "[TaskTick] PID \(pid) was recycled by macOS to a different process; this log's owner is presumed dead."
+                    log.stderr = "[SnapRun] PID \(pid) was recycled by macOS to a different process; this log's owner is presumed dead."
                 }
                 cancelled += 1
                 continue
@@ -206,7 +206,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 TaskScheduler.shared.runningTaskIDs.insert(taskID)
                 if (log.stdout ?? "").isEmpty == false {
                     log.stdout = (log.stdout ?? "") +
-                        "\n\n[TaskTick] App was restarted while this script kept running. Output capture is paused — Stop will still work."
+                        "\n\n[SnapRun] App was restarted while this script kept running. Output capture is paused — Stop will still work."
                 }
                 adopted += 1
             } else {
@@ -251,7 +251,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func runningTaskNames() -> [String] {
         let runningIDs = TaskScheduler.shared.runningTaskIDs
         guard !runningIDs.isEmpty else { return [] }
-        let context = TaskTickApp._sharedModelContainer.mainContext
+        let context = SnapRunApp._sharedModelContainer.mainContext
         guard let tasks = try? context.fetch(FetchDescriptor<ScheduledTask>()) else { return [] }
         return tasks.filter { runningIDs.contains($0.id) }.map(\.name)
     }

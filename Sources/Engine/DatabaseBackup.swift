@@ -2,7 +2,7 @@ import CryptoKit
 import Foundation
 import SwiftData
 import os
-import TaskTickCore
+import SnapRunCore
 
 /// Manages automatic data backups.
 ///
@@ -22,10 +22,10 @@ import TaskTickCore
 final class DatabaseBackup: ObservableObject {
     static let shared = DatabaseBackup()
 
-    private static let logger = Logger(subsystem: "com.lifedever.TaskTick", category: "DatabaseBackup")
-    private static let fileExtension = "tasktickbackup"
+    private static let logger = Logger(subsystem: "com.lifedever.SnapRun", category: "DatabaseBackup")
+    private static let fileExtension = "snaprunbackup"
     private static let contentHashKey = "lastBackupContentHash"
-    /// Filenames look like `2026-04-21T10-30-45Z.tasktickbackup` so they sort lexically.
+    /// Filenames look like `2026-04-21T10-30-45Z.snaprunbackup` so they sort lexically.
     private static let timestampFormatter: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime]
@@ -64,9 +64,9 @@ final class DatabaseBackup: ObservableObject {
         self.isEnabled = UserDefaults.standard.object(forKey: "backupEnabled") as? Bool ?? true
         self.intervalHours = UserDefaults.standard.object(forKey: "backupIntervalHours") as? Int ?? 24
         self.maxBackups = UserDefaults.standard.object(forKey: "backupMaxCount") as? Int ?? 5
-        let bundleId = Bundle.main.bundleIdentifier ?? "com.lifedever.TaskTick"
+        let bundleId = Bundle.main.bundleIdentifier ?? "com.lifedever.SnapRun"
         let subDir = bundleId.hasSuffix(".dev") ? "backups-dev" : "backups"
-        let defaultDir = NSHomeDirectory() + "/.tasktick/" + subDir
+        let defaultDir = NSHomeDirectory() + "/.snaprun/" + subDir
         self.customDirectory = UserDefaults.standard.string(forKey: "backupDirectory") ?? defaultDir
     }
 
@@ -225,7 +225,7 @@ final class DatabaseBackup: ObservableObject {
 
         do {
             // Atomic write: data lands at a temp path then is renamed into place,
-            // so a crash mid-write never leaves a half-written .tasktickbackup behind.
+            // so a crash mid-write never leaves a half-written .snaprunbackup behind.
             try data.write(to: fileURL, options: .atomic)
             Self.logger.info("Backup written to \(fileURL.path) (\(exportedTasks.count) tasks, \(templates.count) templates)")
             pruneOldBackups(in: backupDir)
@@ -276,7 +276,7 @@ final class DatabaseBackup: ObservableObject {
         // Heavy SwiftData work off main: capture the container on main, then detach
         // a task that builds its own ModelContext from it. Returning only the
         // primitive RestoreResult keeps the SwiftData objects on their original actor.
-        let container = TaskTickApp._sharedModelContainer
+        let container = SnapRunApp._sharedModelContainer
         let result: RestoreResult = await Task.detached(priority: .userInitiated) {
             let bgContext = ModelContext(container)
             return Self.applyPayloadOnBackground(payload, in: bgContext)
@@ -359,7 +359,7 @@ final class DatabaseBackup: ObservableObject {
     /// the UI translates to "restart now" because SwiftData cannot reload after the
     /// underlying file changes.
     private func restoreLegacy(from entry: BackupEntry) -> RestoreResult {
-        let storeURL = TaskTickApp._storeURL
+        let storeURL = SnapRunApp._storeURL
         let baseName = storeURL.lastPathComponent
         let backupStore = entry.url.appendingPathComponent(baseName)
         let fm = FileManager.default
@@ -476,7 +476,7 @@ final class DatabaseBackup: ObservableObject {
 
     private func makeLegacyEntry(at url: URL) -> BackupEntry? {
         let fm = FileManager.default
-        let storeURL = TaskTickApp._storeURL
+        let storeURL = SnapRunApp._storeURL
         let baseName = storeURL.lastPathComponent
         let backupStore = url.appendingPathComponent(baseName)
         guard fm.fileExists(atPath: backupStore.path) else { return nil }
@@ -571,7 +571,7 @@ final class DatabaseBackup: ObservableObject {
 /// On-disk format for a single JSON backup. Versioned via `format`; older readers
 /// reject unknown formats rather than silently mis-decoding.
 struct BackupPayload: Codable {
-    static let currentFormat = "tasktick-backup-v1"
+    static let currentFormat = "snaprun-backup-v1"
 
     let format: String
     let appVersion: String

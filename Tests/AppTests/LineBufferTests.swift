@@ -1,5 +1,5 @@
 import Testing
-@testable import TaskTickApp
+@testable import SnapRunApp
 
 @Suite("LineBuffer Tests")
 struct LineBufferTests {

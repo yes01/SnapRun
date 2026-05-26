@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Single entry point for CLI / URL-Scheme triggered actions. Both the
 /// AppDelegate URL handler and the DistributedNotification observers route
@@ -16,8 +16,8 @@ final class CLIBridge {
     }
 
     /// Notification names: see spec §6.1
-    /// Dynamic per-bundle so dev (`com.lifedever.TaskTick.dev`) and release
-    /// (`com.lifedever.TaskTick`) running in parallel don't crosstalk.
+    /// Dynamic per-bundle so dev (`com.lifedever.SnapRun.dev`) and release
+    /// (`com.lifedever.SnapRun`) running in parallel don't crosstalk.
     private static var bundlePrefix: String {
         BundleContext.bundleID
     }
@@ -83,7 +83,7 @@ final class CLIBridge {
     /// Parse `tasktick://run?id=<uuid>` into (action, uuid). Returns nil for
     /// malformed URLs.
     func parse(url: URL) -> (action: Action, taskId: UUID)? {
-        guard url.scheme == "tasktick",
+        guard url.scheme == "snaprun",
               let host = url.host,
               let action = Action(rawValue: host),
               let comps = URLComponents(url: url, resolvingAgainstBaseURL: false),

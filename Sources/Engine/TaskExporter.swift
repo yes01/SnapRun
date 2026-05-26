@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 import SwiftData
 import UniformTypeIdentifiers
-import TaskTickCore
+import SnapRunCore
 
 /// Exports and imports tasks as JSON files.
 @MainActor
@@ -52,7 +52,7 @@ struct TaskExporter {
 
         let panel = NSSavePanel()
         panel.allowedContentTypes = [UTType.json]
-        panel.nameFieldStringValue = "TaskTick-export.json"
+        panel.nameFieldStringValue = "SnapRun-export.json"
         panel.title = "Export Tasks"
 
         guard panel.runModal() == .OK, let url = panel.url else { return }

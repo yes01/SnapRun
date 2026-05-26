@@ -1,5 +1,5 @@
 /* App */
-"app.name" = "TaskTick";
+"app.name" = "SnapRun";
 
 /* Menu Bar */
 "menubar.open" = "Open";
@@ -200,7 +200,7 @@
 "notification.succeeded" = "Success";
 "notification.failed" = "Failed";
 "notification.denied.title" = "Notifications Disabled";
-"notification.denied.message" = "TaskTick wants to deliver task results, but notifications are turned off in System Settings. Please re-enable them to receive task notifications.";
+"notification.denied.message" = "SnapRun wants to deliver task results, but notifications are turned off in System Settings. Please re-enable them to receive task notifications.";
 "notification.denied.open_settings" = "Open System Settings";
 "notification.denied.later" = "Later";
 
@@ -234,7 +234,7 @@
 "toast.log.cleared" = "Cleaned up stale log";
 
 /* Quit confirmation */
-"quit.confirm.title" = "Quit TaskTick?";
+"quit.confirm.title" = "Quit SnapRun?";
 "quit.confirm.message" = "%d script(s) are still running. Quitting will terminate them immediately:";
 "quit.confirm.cancel" = "Cancel";
 "quit.confirm.quit" = "Quit and Terminate";
@@ -242,7 +242,7 @@
 /* Live log file (manual tasks) */
 "settings.logs.streaming" = "Live Log File";
 "settings.logs.stream_to_file" = "Stream manual task output to file";
-"settings.logs.stream_to_file.hint" = "Each manual task's most recent run is written to ~/Library/Logs/TaskTick/<task-name>.log so you can tail -f from a terminal or open it in Console.app. Each new run overwrites the previous content.";
+"settings.logs.stream_to_file.hint" = "Each manual task's most recent run is written to ~/Library/Logs/SnapRun/<task-name>.log so you can tail -f from a terminal or open it in Console.app. Each new run overwrites the previous content.";
 "settings.logs.reveal_directory" = "Reveal in Finder";
 "task.detail.live_log_file" = "Live Log File";
 "task.detail.live_log.reveal" = "Reveal in Finder";
@@ -363,17 +363,17 @@
 "settings.updates.new_version" = "New version available: %@";
 
 "settings.about" = "About";
-"settings.about.section" = "About TaskTick";
+"settings.about.section" = "About SnapRun";
 "settings.about.version" = "Version";
 "settings.about.build" = "Build";
 "settings.about.github" = "GitHub Repository";
 "settings.about.issues" = "Report an Issue";
 "settings.about.sponsor" = "Sponsor";
 "settings.about.copyright" = "© 2026 lifedever. GPL-3.0 License.";
-"settings.about.description" = "A native macOS app for managing scheduled tasks. No crontab, no launchd — just TaskTick.";
+"settings.about.description" = "A native macOS app for managing scheduled tasks. No crontab, no launchd — just SnapRun.";
 
 /* Commands */
-"command.about" = "About TaskTick";
+"command.about" = "About SnapRun";
 "command.check_updates" = "Check for Updates...";
 "command.new_task" = "New Task";
 "command.import" = "Import Tasks...";
@@ -404,7 +404,7 @@
 /* Crontab Import */
 "command.import_crontab" = "Import from System Crontab...";
 "crontab.import.title" = "Import from Crontab";
-"crontab.import.description" = "Select crontab entries to import as TaskTick tasks.";
+"crontab.import.description" = "Select crontab entries to import as SnapRun tasks.";
 "crontab.import.empty" = "No Crontab Entries";
 "crontab.import.empty_description" = "No active entries found in your system crontab.";
 "crontab.import.select_all" = "Select All";
@@ -417,12 +417,12 @@
 "crontab.comment.no" = "Keep";
 
 /* Update Dialog */
-"update.available.title" = "A new version of TaskTick is available!";
-"update.available.message" = "TaskTick %@ is available — you have %@. Would you like to download it now?";
+"update.available.title" = "A new version of SnapRun is available!";
+"update.available.message" = "SnapRun %@ is available — you have %@. Would you like to download it now?";
 "update.skip" = "Skip This Version";
 "update.remind_later" = "Remind Me Later";
 "update.install" = "Install Update";
-"update.downloading.title" = "Updating TaskTick";
+"update.downloading.title" = "Updating SnapRun";
 "update.downloading" = "Downloading update...";
 "update.ready" = "Ready to install";
 "update.install_restart" = "Install and Restart";
@@ -430,7 +430,7 @@
 "update.check_failed" = "Check for Updates Failed";
 "update.check_failed.hint" = "Unable to connect to the update server. Please check your network connection and try again.";
 "update.no_updates" = "You're up to date!";
-"update.no_updates.message" = "TaskTick %@ is the latest version.";
+"update.no_updates.message" = "SnapRun %@ is the latest version.";
 "update.download_error" = "Download Failed";
 "update.dmg_error" = "Update Failed";
 "update.dmg_error.message" = "The downloaded disk image is corrupted. Please try downloading the update again.";
@@ -445,7 +445,7 @@
 "error.export_failed.message" = "Couldn't write the export file:\n%@";
 "error.import_failed.title" = "Import Failed";
 "error.import_read_failed" = "Couldn't read the selected file:\n%@";
-"error.import_decode_failed" = "The file doesn't appear to be a valid TaskTick export:\n%@";
+"error.import_decode_failed" = "The file doesn't appear to be a valid SnapRun export:\n%@";
 "error.import_save_failed" = "Imported tasks couldn't be saved:\n%@";
 "error.delete_failed.title" = "Couldn't Delete";
 "error.delete_failed.message" = "The item was removed but the change couldn't be saved. It may reappear on restart.\n\n%@";
@@ -489,11 +489,11 @@
 "editor.shortcut.open_app" = "Open Shortcuts App";
 "editor.shortcut.retry" = "Retry";
 "editor.shortcut.refresh" = "Refresh list";
-"editor.shortcut.hint" = "TaskTick will trigger this via `shortcuts run`.";
+"editor.shortcut.hint" = "SnapRun will trigger this via `shortcuts run`.";
 "editor.shortcut.load_failed" = "Failed to load shortcuts.";
 "editor.shortcut.placeholder" = "Select a shortcut";
 "task.detail.shortcut" = "Shortcut";
-"task.detail.shortcut.hint" = "TaskTick runs this via `shortcuts run`.";
+"task.detail.shortcut.hint" = "SnapRun runs this via `shortcuts run`.";
 
 /* Default Template Names & Notes */
 "default_template.category.database" = "Database Backup";
@@ -550,32 +550,32 @@
 
 /* Settings → Command Line */
 "settings.cli.section.title" = "Command Line";
-"settings.cli.description" = "Enable the `tasktick` command in your terminal to control TaskTick from scripts and Raycast.";
+"settings.cli.description" = "Enable the `snaprun` command in your terminal to control SnapRun from scripts and Raycast.";
 "settings.cli.enable_button" = "Enable CLI…";
 "settings.cli.installed" = "Linked at %@";
 "settings.cli.not_installed" = "Not installed";
-"settings.cli.install.alert.title" = "Enable tasktick CLI";
-"settings.cli.install.alert.message" = "Run this command in Terminal to enable the `tasktick` CLI:\n\n%@";
+"settings.cli.install.alert.title" = "Enable snaprun CLI";
+"settings.cli.install.alert.message" = "Run this command in Terminal to enable the `snaprun` CLI:\n\n%@";
 "settings.cli.install.alert.copy" = "Copy Command";
 "settings.cli.install.alert.open_terminal" = "Open Terminal";
 "settings.cli.install.alert.cancel" = "Cancel";
 "settings.cli.uninstall_button" = "Uninstall CLI…";
-"settings.cli.uninstall.alert.title" = "Uninstall tasktick CLI";
-"settings.cli.uninstall.alert.message" = "Run this command in Terminal to remove the `tasktick` CLI symlink:\n\n%@";
+"settings.cli.uninstall.alert.title" = "Uninstall snaprun CLI";
+"settings.cli.uninstall.alert.message" = "Run this command in Terminal to remove the `snaprun` CLI symlink:\n\n%@";
 
 /* Action Toast (Run/Stop/Restart banners) */
 "toast.action.started" = "Started";
 "toast.action.stopped" = "Stopped";
 "toast.action.restarted" = "Restarted";
 "toast.action.failed" = "Action failed";
-"toast.action.failed.notReady" = "TaskTick is still starting";
+"toast.action.failed.notReady" = "SnapRun is still starting";
 "toast.action.failed.taskNotFound" = "Task not found";
 
-"cli.repair.title" = "Update tasktick CLI link";
-"cli.repair.message" = "The tasktick command at %@ points to an outdated location. Update it to the new path now? (Requires admin permission.)";
+"cli.repair.title" = "Update snaprun CLI link";
+"cli.repair.message" = "The snaprun command at %@ points to an outdated location. Update it to the new path now? (Requires admin permission.)";
 "cli.repair.update_button" = "Update Now";
 "cli.repair.later_button" = "Later";
-"cli.repair.success.title" = "tasktick CLI updated";
+"cli.repair.success.title" = "snaprun CLI updated";
 "cli.repair.success.message" = "%@ now points at the bundled CLI binary.";
 
 /* Time */

@@ -1,5 +1,5 @@
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 /// Single entry point for "user just performed an action" banners.
 /// Run/Stop/Restart success → fires UN banner. Reveal does NOT fire.

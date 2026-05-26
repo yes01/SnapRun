@@ -1,7 +1,7 @@
 import XCTest
 import SwiftData
-import TaskTickCore
-@testable import tasktick
+import SnapRunCore
+@testable import snaprun
 
 @MainActor
 final class ReadOnlyStoreTests: XCTestCase {
@@ -9,7 +9,7 @@ final class ReadOnlyStoreTests: XCTestCase {
     func testOpensExistingStoreAndFetchesTasks() throws {
         // Set up a temp store with one task.
         let tmp = FileManager.default.temporaryDirectory
-            .appendingPathComponent("tasktick-cli-test-\(UUID().uuidString).store")
+            .appendingPathComponent("snaprun-cli-test-\(UUID().uuidString).store")
         defer { try? FileManager.default.removeItem(at: tmp) }
 
         do {
@@ -30,7 +30,7 @@ final class ReadOnlyStoreTests: XCTestCase {
 
     func testOpensEmptyStoreWithoutCrashing() throws {
         let tmp = FileManager.default.temporaryDirectory
-            .appendingPathComponent("tasktick-cli-empty-\(UUID().uuidString).store")
+            .appendingPathComponent("snaprun-cli-empty-\(UUID().uuidString).store")
         defer { try? FileManager.default.removeItem(at: tmp) }
 
         let store = try ReadOnlyStore(url: tmp)

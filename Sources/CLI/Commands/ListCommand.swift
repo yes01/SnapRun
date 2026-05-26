@@ -1,7 +1,7 @@
 import ArgumentParser
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 struct ListCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(

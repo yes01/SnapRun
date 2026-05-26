@@ -1,8 +1,8 @@
 import AppKit
 import SwiftUI
-import TaskTickCore
+import SnapRunCore
 
-/// Settings → Command Line section. Detects whether the `tasktick` symlink
+/// Settings → Command Line section. Detects whether the `snaprun` symlink
 /// already points at the current .app, and offers a one-shot dialog with
 /// the sudo command pre-filled (1Password 7 pattern).
 @MainActor
@@ -77,11 +77,11 @@ struct CLIInstallSection: View {
         installState = .notInstalled
     }
 
-    /// Path to the `tasktick` binary co-located with the running GUI.
+    /// Path to the `snaprun` binary co-located with the running GUI.
     /// Release CLI lives in Contents/cli/ (NOT Contents/MacOS/) — case-
     /// insensitive APFS would otherwise collide 'TaskTick' (GUI) with
     /// 'tasktick' (CLI) and silently overwrite one. Dev CLI stays in
-    /// Contents/MacOS/tasktick-dev because the dash-suffixed name doesn't
+    /// Contents/MacOS/snaprun-dev because the dash-suffixed name doesn't
     /// collide with 'TaskTick Dev'.
     private func currentAppCLIPath() -> String {
         let subdir = BundleContext.isDev ? "Contents/MacOS" : "Contents/cli"
@@ -91,9 +91,9 @@ struct CLIInstallSection: View {
     }
 
     /// CLI binary / symlink name. Differs by bundle ID so dev and release
-    /// can coexist on PATH (`tasktick` for release, `tasktick-dev` for dev).
+    /// can coexist on PATH (`snaprun` for release, `snaprun-dev` for dev).
     private var cliName: String {
-        BundleContext.isDev ? "tasktick-dev" : "tasktick"
+        BundleContext.isDev ? "snaprun-dev" : "snaprun"
     }
 
     private var buttonLabel: String {

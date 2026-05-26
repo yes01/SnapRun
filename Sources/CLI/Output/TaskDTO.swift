@@ -1,5 +1,5 @@
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 enum TaskKind: String, Codable {
     case scheduled

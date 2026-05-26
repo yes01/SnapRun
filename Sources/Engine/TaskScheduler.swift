@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Master timer-based task scheduler.
 /// Maintains a single timer that fires at the earliest `nextRunAt` across all enabled tasks.
@@ -160,7 +160,7 @@ final class TaskScheduler: ObservableObject {
                     log.durationMs = Int(now.timeIntervalSince(log.startedAt) * 1000)
                 }
                 if (log.stderr ?? "").isEmpty {
-                    log.stderr = "[TaskTick] Adopted process \(pid) exited externally."
+                    log.stderr = "[SnapRun] Adopted process \(pid) exited externally."
                 }
             }
         }

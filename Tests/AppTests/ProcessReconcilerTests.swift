@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import TaskTickCore
+@testable import SnapRunCore
 
 @Suite("ProcessReconciler Tests")
 struct ProcessReconcilerTests {

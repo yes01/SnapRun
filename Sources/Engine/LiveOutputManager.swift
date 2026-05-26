@@ -1,6 +1,6 @@
 @preconcurrency import Combine
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct LiveChunkEvent {
     let taskId: UUID

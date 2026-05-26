@@ -1,5 +1,5 @@
 import SwiftUI
-import TaskTickCore
+import SnapRunCore
 
 /// A text field with a folder-chooser button for selecting a working directory.
 @MainActor

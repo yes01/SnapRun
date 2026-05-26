@@ -1,5 +1,5 @@
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct ScriptTemplate: Codable, Identifiable, Equatable, Hashable {
     var id: UUID

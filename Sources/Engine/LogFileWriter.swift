@@ -1,8 +1,8 @@
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 /// Streams a single running script's stdout/stderr to a plain-text log file
-/// under `~/Library/Logs/TaskTick/`. Designed for the manual-script /
+/// under `~/Library/Logs/SnapRun/`. Designed for the manual-script /
 /// dev-server scenario where the user wants `tail -f` from a terminal or
 /// drag the file into Console.app.
 ///
@@ -13,7 +13,7 @@ import TaskTickCore
 final class LogFileWriter: @unchecked Sendable {
     let fileURL: URL
     private var handle: FileHandle?
-    private let queue = DispatchQueue(label: "com.lifedever.tasktick.logwriter")
+    private let queue = DispatchQueue(label: "com.lifedever.snaprun.logwriter")
     /// Holds the tail of a chunk that might be the start of an ANSI escape
     /// sequence split across pipe reads. Without this, a chunk ending in
     /// `\x1B[0;32` followed by `m\nlog text\n` would have the head ESC
@@ -117,10 +117,10 @@ final class LogFileWriter: @unchecked Sendable {
 
     // MARK: - Static helpers
 
-    /// `~/Library/Logs/TaskTick/<bundle-id>/`. Returns nil only if the user's
+    /// `~/Library/Logs/SnapRun/<bundle-id>/`. Returns nil only if the user's
     /// Library directory itself can't be located or created — extremely rare.
     /// Bundle-ID subdir keeps dev / release log files isolated. Pre-bundle-ID
-    /// logs at `~/Library/Logs/TaskTick/<slug>.log` are orphaned; acceptable
+    /// logs at `~/Library/Logs/SnapRun/<slug>.log` are orphaned; acceptable
     /// per the comment above that log files are ephemeral.
     static func logsDirectory() -> URL? {
         let fm = FileManager.default
@@ -131,7 +131,7 @@ final class LogFileWriter: @unchecked Sendable {
             create: true
         ) else { return nil }
         let bundleId = BundleContext.bundleID
-        let dir = lib.appendingPathComponent("Logs/TaskTick/\(bundleId)", isDirectory: true)
+        let dir = lib.appendingPathComponent("Logs/SnapRun/\(bundleId)", isDirectory: true)
         do {
             try fm.createDirectory(at: dir, withIntermediateDirectories: true)
             return dir

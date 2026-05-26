@@ -1,11 +1,11 @@
 import Combine
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Listens to internal task lifecycle events and rebroadcasts them as
-/// Distributed Notifications so CLI subscribers (`tasktick tail`,
-/// `tasktick wait`) can react without polling.
+/// Distributed Notifications so CLI subscribers (`snaprun tail`,
+/// `snaprun wait`) can react without polling.
 @MainActor
 final class CLIBroadcaster {
 
@@ -92,7 +92,7 @@ final class CLIBroadcaster {
 
     private func mostRecentExitCode(for taskId: UUID) -> Int? {
         // TaskScheduler.modelContext is private; use the app-wide shared container instead.
-        let context = TaskTickApp._sharedModelContainer.mainContext
+        let context = SnapRunApp._sharedModelContainer.mainContext
         var descriptor = FetchDescriptor<ExecutionLog>(
             predicate: #Predicate { $0.task?.id == taskId },
             sortBy: [SortDescriptor(\.startedAt, order: .reverse)]

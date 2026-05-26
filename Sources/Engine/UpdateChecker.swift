@@ -1,6 +1,6 @@
 import AppKit
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 /// Checks GitHub Releases API for app updates, downloads and installs.
 @MainActor
@@ -26,7 +26,7 @@ final class UpdateChecker: ObservableObject {
     static let shared = UpdateChecker()
 
     let repoOwner = "lifedever"
-    let repoName = "TaskTick"
+    let repoName = "SnapRun"
     let giteeRepo = "lifedever/task-tick"
 
     private var downloadTask: URLSessionDownloadTask?
@@ -223,7 +223,7 @@ final class UpdateChecker: ObservableObject {
             return
         }
         let mountPoint = String(mountLine[volumeRange.lowerBound...]).trimmingCharacters(in: .whitespaces)
-        let sourceApp = "\(mountPoint)/TaskTick.app"
+        let sourceApp = "\(mountPoint)/SnapRun.app"
 
         guard FileManager.default.fileExists(atPath: sourceApp) else {
             // Detach and show error
@@ -263,7 +263,7 @@ final class UpdateChecker: ObservableObject {
         """
 
         do {
-            let scriptPath = NSTemporaryDirectory() + "tasktick_update.sh"
+            let scriptPath = NSTemporaryDirectory() + "snaprun_update.sh"
             try script.write(toFile: scriptPath, atomically: true, encoding: .utf8)
 
             let process = Process()
@@ -275,12 +275,12 @@ final class UpdateChecker: ObservableObject {
             // whether to continue — otherwise updating silently drops recent edits.
             DatabaseBackup.shared.performBackup()
             do {
-                try TaskTickApp._sharedModelContainer.mainContext.save()
+                try SnapRunApp._sharedModelContainer.mainContext.save()
                 // save() writes to the -wal sidecar. The installer is about to replace
                 // the app bundle and relaunch — if the new launch hits any open failure,
                 // a WAL left behind can be discarded. Merge it into the main store now
                 // so the new version sees a self-contained .store file.
-                StoreHardener.checkpoint(at: TaskTickApp._storeURL)
+                StoreHardener.checkpoint(at: SnapRunApp._storeURL)
             } catch {
                 let alert = NSAlert()
                 alert.messageText = L10n.tr("update.save_failed.title")
@@ -401,7 +401,7 @@ final class DownloadDelegate: NSObject, URLSessionDownloadDelegate, Sendable {
             return
         }
 
-        let dest = FileManager.default.temporaryDirectory.appendingPathComponent("TaskTick-update.dmg")
+        let dest = FileManager.default.temporaryDirectory.appendingPathComponent("SnapRun-update.dmg")
         try? FileManager.default.removeItem(at: dest)
 
         do {

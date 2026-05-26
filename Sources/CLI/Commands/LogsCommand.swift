@@ -1,6 +1,6 @@
 import ArgumentParser
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct LogsCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -31,7 +31,7 @@ struct LogsCommand: AsyncParsableCommand {
         do {
             task = try resolver.resolve(identifier)
         } catch let err as TaskResolverError {
-            FileHandle.standardError.write(Data("tasktick: \(err)\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: \(err)\n".utf8))
             throw ExitCode(1)
         }
 
@@ -46,7 +46,7 @@ struct LogsCommand: AsyncParsableCommand {
         }
 
         guard let log = try store.fetchLatestLog(forTaskId: task.id) else {
-            FileHandle.standardError.write(Data("tasktick: no execution logs for \(task.name)\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: no execution logs for \(task.name)\n".utf8))
             throw ExitCode(1)
         }
 

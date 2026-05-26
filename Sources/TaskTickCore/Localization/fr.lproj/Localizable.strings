@@ -1,5 +1,5 @@
 /* App */
-"app.name" = "TaskTick";
+"app.name" = "SnapRun";
 /* Menu Bar */
 "menubar.open" = "Ouvrir";
 "menubar.no_tasks" = "Aucune tache";
@@ -180,7 +180,7 @@
 "notification.succeeded" = "Succes";
 "notification.failed" = "Echoue";
 "notification.denied.title" = "Notifications desactivees";
-"notification.denied.message" = "TaskTick souhaite vous envoyer les resultats des taches, mais les notifications sont desactivees dans les Reglages systeme. Veuillez les reactiver pour recevoir les notifications de taches.";
+"notification.denied.message" = "SnapRun souhaite vous envoyer les resultats des taches, mais les notifications sont desactivees dans les Reglages systeme. Veuillez les reactiver pour recevoir les notifications de taches.";
 "notification.denied.open_settings" = "Ouvrir les Reglages systeme";
 "notification.denied.later" = "Plus tard";
 "quick_launcher.placeholder" = "Rechercher des taches...";
@@ -208,13 +208,13 @@
 "toast.task.stopped" = "Arrete « %@ »";
 "toast.task.restarted" = "Relance « %@ »";
 "toast.log.cleared" = "Journal obsolete nettoye";
-"quit.confirm.title" = "Quitter TaskTick ?";
+"quit.confirm.title" = "Quitter SnapRun ?";
 "quit.confirm.message" = "%d script(s) en cours d'execution. Quitter les terminera immediatement :";
 "quit.confirm.cancel" = "Annuler";
 "quit.confirm.quit" = "Quitter et terminer";
 "settings.logs.streaming" = "Fichier journal en direct";
 "settings.logs.stream_to_file" = "Ecrire la sortie des taches manuelles dans un fichier";
-"settings.logs.stream_to_file.hint" = "La derniere execution de chaque tache manuelle est ecrite dans ~/Library/Logs/TaskTick/<nom-tache>.log, ce qui permet d'utiliser tail -f depuis un terminal ou de l'ouvrir dans Console.app. Chaque nouvelle execution remplace le contenu precedent.";
+"settings.logs.stream_to_file.hint" = "La derniere execution de chaque tache manuelle est ecrite dans ~/Library/Logs/SnapRun/<nom-tache>.log, ce qui permet d'utiliser tail -f depuis un terminal ou de l'ouvrir dans Console.app. Chaque nouvelle execution remplace le contenu precedent.";
 "settings.logs.reveal_directory" = "Afficher dans le Finder";
 "task.detail.live_log_file" = "Fichier journal en direct";
 "task.detail.live_log.reveal" = "Afficher dans le Finder";
@@ -328,15 +328,15 @@
 "settings.updates.check_now" = "Verifier maintenant";
 "settings.updates.new_version" = "Nouvelle version disponible : %@";
 "settings.about" = "A propos";
-"settings.about.section" = "A propos de TaskTick";
+"settings.about.section" = "A propos de SnapRun";
 "settings.about.version" = "Version";
 "settings.about.build" = "Build";
 "settings.about.github" = "Depot GitHub";
 "settings.about.issues" = "Signaler un probleme";
 "settings.about.sponsor" = "Sponsoriser";
 "settings.about.copyright" = "© 2026 lifedever. Licence GPL-3.0.";
-"settings.about.description" = "Une application macOS native pour gerer les taches planifiees. Sans crontab, sans launchd — juste TaskTick.";
-"command.about" = "A propos de TaskTick";
+"settings.about.description" = "Une application macOS native pour gerer les taches planifiees. Sans crontab, sans launchd — juste SnapRun.";
+"command.about" = "A propos de SnapRun";
 "command.check_updates" = "Rechercher des mises a jour...";
 "command.new_task" = "Nouvelle tache";
 "command.import" = "Importer des taches...";
@@ -361,7 +361,7 @@
 "delete.confirm" = "Supprimer";
 "command.import_crontab" = "Importer depuis le crontab systeme...";
 "crontab.import.title" = "Importer depuis le crontab";
-"crontab.import.description" = "Selectionnez les entrees crontab a importer en tant que taches TaskTick.";
+"crontab.import.description" = "Selectionnez les entrees crontab a importer en tant que taches SnapRun.";
 "crontab.import.empty" = "Aucune entree crontab";
 "crontab.import.empty_description" = "Aucune entree active trouvee dans votre crontab systeme.";
 "crontab.import.select_all" = "Tout selectionner";
@@ -372,12 +372,12 @@
 "crontab.comment.message" = "Les entrees importees seront commentees (pas supprimees) dans votre crontab systeme pour eviter les executions en double.";
 "crontab.comment.yes" = "Commenter";
 "crontab.comment.no" = "Conserver";
-"update.available.title" = "Une nouvelle version de TaskTick est disponible !";
-"update.available.message" = "TaskTick %@ est disponible — vous avez la version %@. Souhaitez-vous la telecharger maintenant ?";
+"update.available.title" = "Une nouvelle version de SnapRun est disponible !";
+"update.available.message" = "SnapRun %@ est disponible — vous avez la version %@. Souhaitez-vous la telecharger maintenant ?";
 "update.skip" = "Ignorer cette version";
 "update.remind_later" = "Me rappeler plus tard";
 "update.install" = "Installer la mise a jour";
-"update.downloading.title" = "Mise a jour de TaskTick";
+"update.downloading.title" = "Mise a jour de SnapRun";
 "update.downloading" = "Telechargement de la mise a jour...";
 "update.ready" = "Pret a installer";
 "update.install_restart" = "Installer et redemarrer";
@@ -385,7 +385,7 @@
 "update.check_failed" = "Echec de la verification des mises a jour";
 "update.check_failed.hint" = "Impossible de se connecter au serveur de mises a jour. Veuillez verifier votre connexion reseau et reessayer.";
 "update.no_updates" = "Vous etes a jour !";
-"update.no_updates.message" = "TaskTick %@ est la derniere version.";
+"update.no_updates.message" = "SnapRun %@ est la derniere version.";
 "update.download_error" = "Echec du telechargement";
 "update.dmg_error" = "Echec de la mise a jour";
 "update.dmg_error.message" = "L'image disque telechargee est corrompue. Veuillez essayer de telecharger la mise a jour a nouveau.";
@@ -399,7 +399,7 @@
 "error.export_failed.message" = "Impossible d'ecrire le fichier d'export :\n%@";
 "error.import_failed.title" = "Echec de l'importation";
 "error.import_read_failed" = "Impossible de lire le fichier selectionne :\n%@";
-"error.import_decode_failed" = "Le fichier ne semble pas etre un export TaskTick valide :\n%@";
+"error.import_decode_failed" = "Le fichier ne semble pas etre un export SnapRun valide :\n%@";
 "error.import_save_failed" = "Les taches importees n'ont pas pu etre enregistrees :\n%@";
 "error.delete_failed.title" = "Echec de la suppression";
 "error.delete_failed.message" = "L'element a ete retire mais la modification n'a pas pu etre enregistree. Il peut reapparaitre au redemarrage.\n\n%@";
@@ -441,11 +441,11 @@
 "editor.shortcut.open_app" = "Ouvrir Raccourcis";
 "editor.shortcut.retry" = "Reessayer";
 "editor.shortcut.refresh" = "Actualiser la liste";
-"editor.shortcut.hint" = "TaskTick l'execute via `shortcuts run`.";
+"editor.shortcut.hint" = "SnapRun l'execute via `shortcuts run`.";
 "editor.shortcut.load_failed" = "Echec du chargement des raccourcis.";
 "editor.shortcut.placeholder" = "Selectionner un raccourci";
 "task.detail.shortcut" = "Raccourci";
-"task.detail.shortcut.hint" = "TaskTick l'execute via `shortcuts run`.";
+"task.detail.shortcut.hint" = "SnapRun l'execute via `shortcuts run`.";
 "default_template.category.database" = "Sauvegarde de base de donnees";
 "default_template.category.logs" = "Nettoyage des journaux";
 "default_template.category.git" = "Synchronisation Git";
@@ -496,32 +496,32 @@
 "recovery.open_settings" = "Ouvrir les Réglages";
 "recovery.open_folder" = "Afficher le fichier";
 "settings.cli.section.title" = "Ligne de commande";
-"settings.cli.description" = "Activez la commande `tasktick` dans votre terminal pour controler TaskTick depuis des scripts et Raycast.";
+"settings.cli.description" = "Activez la commande `snaprun` dans votre terminal pour controler SnapRun depuis des scripts et Raycast.";
 "settings.cli.enable_button" = "Activer la CLI…";
 "settings.cli.installed" = "Liee a %@";
 "settings.cli.not_installed" = "Non installee";
-"settings.cli.install.alert.title" = "Activer la CLI tasktick";
-"settings.cli.install.alert.message" = "Executez cette commande dans le Terminal pour activer la CLI `tasktick` :\n\n%@";
+"settings.cli.install.alert.title" = "Activer la CLI snaprun";
+"settings.cli.install.alert.message" = "Executez cette commande dans le Terminal pour activer la CLI `snaprun` :\n\n%@";
 "settings.cli.install.alert.copy" = "Copier la commande";
 "settings.cli.install.alert.open_terminal" = "Ouvrir le Terminal";
 "settings.cli.install.alert.cancel" = "Annuler";
 "settings.cli.uninstall_button" = "Desinstaller la CLI…";
-"settings.cli.uninstall.alert.title" = "Desinstaller la CLI tasktick";
-"settings.cli.uninstall.alert.message" = "Executez cette commande dans le Terminal pour supprimer le lien symbolique `tasktick` :\n\n%@";
+"settings.cli.uninstall.alert.title" = "Desinstaller la CLI snaprun";
+"settings.cli.uninstall.alert.message" = "Executez cette commande dans le Terminal pour supprimer le lien symbolique `snaprun` :\n\n%@";
 
 /* Action Toast (Run/Stop/Restart banners) */
 "toast.action.started" = "Démarré";
 "toast.action.stopped" = "Arrêté";
 "toast.action.restarted" = "Redémarré";
 "toast.action.failed" = "Action échouée";
-"toast.action.failed.notReady" = "TaskTick démarre";
+"toast.action.failed.notReady" = "SnapRun démarre";
 "toast.action.failed.taskNotFound" = "Tâche introuvable";
 
-"cli.repair.title" = "Mettre à jour le lien tasktick CLI";
+"cli.repair.title" = "Mettre à jour le lien snaprun CLI";
 "cli.repair.message" = "%@ pointe vers un ancien chemin de la CLI. Mettre à jour maintenant ? (Permissions administrateur requises)";
 "cli.repair.update_button" = "Mettre à jour";
 "cli.repair.later_button" = "Plus tard";
-"cli.repair.success.title" = "tasktick CLI mis à jour";
+"cli.repair.success.title" = "snaprun CLI mis à jour";
 "cli.repair.success.message" = "%@ pointe maintenant vers le binaire CLI groupé.";
 
 /* Time */

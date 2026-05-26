@@ -1,6 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
-import TaskTickCore
+import SnapRunCore
 
 /// Template editor view, shown as a Window (not a sheet) to get proper TabView chrome.
 @MainActor

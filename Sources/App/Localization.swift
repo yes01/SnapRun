@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import TaskTickCore
+import SnapRunCore
 
 /// Observable language manager that triggers SwiftUI re-renders on language change.
 @MainActor

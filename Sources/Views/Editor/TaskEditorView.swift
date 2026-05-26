@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
-import TaskTickCore
+import SnapRunCore
 
 enum ScriptSource: String, CaseIterable {
     case inline

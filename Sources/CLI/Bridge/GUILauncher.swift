@@ -1,14 +1,14 @@
 import AppKit
 import Foundation
-import TaskTickCore
+import SnapRunCore
 
-/// Detects whether TaskTick.app is running, launches it via URL Scheme if not,
+/// Detects whether SnapRun.app is running, launches it via URL Scheme if not,
 /// and waits up to 10s for it to be ready before returning.
 enum GUILauncher {
 
-    /// Bundle IDs to look for. Includes the dev variant so `tasktick` invoked
-    /// during development still works against TaskTick Dev.app.
-    private static let bundleIds = ["com.lifedever.TaskTick", "com.lifedever.TaskTick.dev"]
+    /// Bundle IDs to look for. Includes the dev variant so `snaprun` invoked
+    /// during development still works against SnapRun Dev.app.
+    private static let bundleIds = ["com.lifedever.SnapRun", "com.lifedever.SnapRun.dev"]
 
     static func isRunning() -> Bool {
         bundleIds.contains { id in
@@ -22,7 +22,7 @@ enum GUILauncher {
     /// doesn't fit a multi-field create payload).
     static func launchAndWait(timeout: TimeInterval = 10) -> Bool {
         // Pick URL Scheme based on the CLI's bundle context.
-        let scheme = BundleContext.isDev ? "tasktick-dev" : "tasktick"
+        let scheme = BundleContext.isDev ? "snaprun-dev" : "snaprun"
         // Use a no-op host so AppDelegate.parse() returns nil and just wakes
         // the app without trying to act on a task. The URL still works to
         // launch the app via LaunchServices.
@@ -42,10 +42,10 @@ enum GUILauncher {
     /// app to be running. Returns whether launch succeeded.
     static func launchAndWait(action: NotificationBridge.CLIAction, taskId: UUID, timeout: TimeInterval = 10) -> Bool {
         // Pick URL Scheme based on the CLI's bundle context: dev CLI
-        // (inside TaskTick Dev.app) uses tasktick-dev:// which is registered
+        // (inside SnapRun Dev.app) uses snaprun-dev:// which is registered
         // only by the dev .app, eliminating LaunchServices ambiguity when
         // both apps are installed.
-        let scheme = BundleContext.isDev ? "tasktick-dev" : "tasktick"
+        let scheme = BundleContext.isDev ? "snaprun-dev" : "snaprun"
         guard let url = URL(string: "\(scheme)://\(action.rawValue)?id=\(taskId.uuidString)") else {
             return false
         }

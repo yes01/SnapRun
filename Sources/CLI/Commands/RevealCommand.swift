@@ -4,7 +4,7 @@ import Foundation
 struct RevealCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "reveal",
-        abstract: "Open the TaskTick main window with this task selected."
+        abstract: "Open the SnapRun main window with this task selected."
     )
 
     @Argument(help: "Task identifier.")

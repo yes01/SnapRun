@@ -1,5 +1,5 @@
 /* App */
-"app.name" = "TaskTick";
+"app.name" = "SnapRun";
 
 /* Menu Bar */
 "menubar.open" = "Buka";
@@ -200,7 +200,7 @@
 "notification.succeeded" = "Berhasil";
 "notification.failed" = "Gagal";
 "notification.denied.title" = "Notifikasi Dinonaktifkan";
-"notification.denied.message" = "TaskTick ingin mengirimkan hasil tugas, tetapi notifikasi telah dimatikan di Pengaturan Sistem. Silakan aktifkan kembali untuk menerima notifikasi tugas.";
+"notification.denied.message" = "SnapRun ingin mengirimkan hasil tugas, tetapi notifikasi telah dimatikan di Pengaturan Sistem. Silakan aktifkan kembali untuk menerima notifikasi tugas.";
 "notification.denied.open_settings" = "Buka Pengaturan Sistem";
 "notification.denied.later" = "Nanti";
 
@@ -234,7 +234,7 @@
 "toast.log.cleared" = "Log usang telah dibersihkan";
 
 /* Quit confirmation */
-"quit.confirm.title" = "Keluar dari TaskTick?";
+"quit.confirm.title" = "Keluar dari SnapRun?";
 "quit.confirm.message" = "%d skrip masih berjalan. Keluar akan langsung menghentikannya:";
 "quit.confirm.cancel" = "Batal";
 "quit.confirm.quit" = "Keluar dan Hentikan";
@@ -242,7 +242,7 @@
 /* Live log file (manual tasks) */
 "settings.logs.streaming" = "File Log Langsung";
 "settings.logs.stream_to_file" = "Streaming output tugas manual ke file";
-"settings.logs.stream_to_file.hint" = "Setiap eksekusi terbaru dari tugas manual ditulis ke ~/Library/Logs/TaskTick/<nama-tugas>.log sehingga Anda dapat tail -f dari terminal atau membukanya di Console.app. Setiap eksekusi baru menimpa konten sebelumnya.";
+"settings.logs.stream_to_file.hint" = "Setiap eksekusi terbaru dari tugas manual ditulis ke ~/Library/Logs/SnapRun/<nama-tugas>.log sehingga Anda dapat tail -f dari terminal atau membukanya di Console.app. Setiap eksekusi baru menimpa konten sebelumnya.";
 "settings.logs.reveal_directory" = "Tampilkan di Finder";
 "task.detail.live_log_file" = "File Log Langsung";
 "task.detail.live_log.reveal" = "Tampilkan di Finder";
@@ -363,17 +363,17 @@
 "settings.updates.new_version" = "Versi baru tersedia: %@";
 
 "settings.about" = "Tentang";
-"settings.about.section" = "Tentang TaskTick";
+"settings.about.section" = "Tentang SnapRun";
 "settings.about.version" = "Versi";
 "settings.about.build" = "Build";
 "settings.about.github" = "Repositori GitHub";
 "settings.about.issues" = "Laporkan Masalah";
 "settings.about.sponsor" = "Sponsor";
 "settings.about.copyright" = "© 2026 lifedever. Lisensi GPL-3.0.";
-"settings.about.description" = "Aplikasi macOS native untuk mengelola tugas terjadwal. Tanpa crontab, tanpa launchd — cukup TaskTick.";
+"settings.about.description" = "Aplikasi macOS native untuk mengelola tugas terjadwal. Tanpa crontab, tanpa launchd — cukup SnapRun.";
 
 /* Commands */
-"command.about" = "Tentang TaskTick";
+"command.about" = "Tentang SnapRun";
 "command.check_updates" = "Periksa Pembaruan...";
 "command.new_task" = "Tugas Baru";
 "command.import" = "Impor Tugas...";
@@ -404,7 +404,7 @@
 /* Crontab Import */
 "command.import_crontab" = "Impor dari Crontab Sistem...";
 "crontab.import.title" = "Impor dari Crontab";
-"crontab.import.description" = "Pilih entri crontab untuk diimpor sebagai tugas TaskTick.";
+"crontab.import.description" = "Pilih entri crontab untuk diimpor sebagai tugas SnapRun.";
 "crontab.import.empty" = "Tidak Ada Entri Crontab";
 "crontab.import.empty_description" = "Tidak ditemukan entri aktif di crontab sistem Anda.";
 "crontab.import.select_all" = "Pilih Semua";
@@ -417,12 +417,12 @@
 "crontab.comment.no" = "Biarkan";
 
 /* Update Dialog */
-"update.available.title" = "Versi baru TaskTick tersedia!";
-"update.available.message" = "TaskTick %@ tersedia — Anda memiliki %@. Apakah Anda ingin mengunduhnya sekarang?";
+"update.available.title" = "Versi baru SnapRun tersedia!";
+"update.available.message" = "SnapRun %@ tersedia — Anda memiliki %@. Apakah Anda ingin mengunduhnya sekarang?";
 "update.skip" = "Lewati Versi Ini";
 "update.remind_later" = "Ingatkan Nanti";
 "update.install" = "Pasang Pembaruan";
-"update.downloading.title" = "Memperbarui TaskTick";
+"update.downloading.title" = "Memperbarui SnapRun";
 "update.downloading" = "Mengunduh pembaruan...";
 "update.ready" = "Siap dipasang";
 "update.install_restart" = "Pasang dan Mulai Ulang";
@@ -430,7 +430,7 @@
 "update.check_failed" = "Pemeriksaan Pembaruan Gagal";
 "update.check_failed.hint" = "Tidak dapat terhubung ke server pembaruan. Periksa koneksi jaringan Anda dan coba lagi.";
 "update.no_updates" = "Anda sudah menggunakan versi terbaru!";
-"update.no_updates.message" = "TaskTick %@ adalah versi terbaru.";
+"update.no_updates.message" = "SnapRun %@ adalah versi terbaru.";
 "update.download_error" = "Unduhan Gagal";
 "update.dmg_error" = "Pembaruan Gagal";
 "update.dmg_error.message" = "Disk image yang diunduh rusak. Silakan coba unduh pembaruan lagi.";
@@ -445,7 +445,7 @@
 "error.export_failed.message" = "Tidak dapat menulis file ekspor:\n%@";
 "error.import_failed.title" = "Impor Gagal";
 "error.import_read_failed" = "Tidak dapat membaca file yang dipilih:\n%@";
-"error.import_decode_failed" = "File tidak terlihat seperti ekspor TaskTick yang valid:\n%@";
+"error.import_decode_failed" = "File tidak terlihat seperti ekspor SnapRun yang valid:\n%@";
 "error.import_save_failed" = "Tugas yang diimpor tidak dapat disimpan:\n%@";
 "error.delete_failed.title" = "Tidak Dapat Menghapus";
 "error.delete_failed.message" = "Item telah dihapus tetapi perubahan tidak dapat disimpan. Mungkin muncul kembali saat dimulai ulang.\n\n%@";
@@ -489,11 +489,11 @@
 "editor.shortcut.open_app" = "Buka App Pintasan";
 "editor.shortcut.retry" = "Coba lagi";
 "editor.shortcut.refresh" = "Segarkan daftar";
-"editor.shortcut.hint" = "TaskTick memicu melalui `shortcuts run`.";
+"editor.shortcut.hint" = "SnapRun memicu melalui `shortcuts run`.";
 "editor.shortcut.load_failed" = "Gagal memuat pintasan.";
 "editor.shortcut.placeholder" = "Pilih pintasan";
 "task.detail.shortcut" = "Pintasan";
-"task.detail.shortcut.hint" = "TaskTick menjalankan via `shortcuts run`.";
+"task.detail.shortcut.hint" = "SnapRun menjalankan via `shortcuts run`.";
 
 /* Default Template Names & Notes */
 "default_template.category.database" = "Cadangan Database";
@@ -550,32 +550,32 @@
 
 /* Settings → Command Line */
 "settings.cli.section.title" = "Baris Perintah";
-"settings.cli.description" = "Aktifkan perintah `tasktick` di terminal Anda untuk mengontrol TaskTick dari skrip dan Raycast.";
+"settings.cli.description" = "Aktifkan perintah `snaprun` di terminal Anda untuk mengontrol SnapRun dari skrip dan Raycast.";
 "settings.cli.enable_button" = "Aktifkan CLI…";
 "settings.cli.installed" = "Tertaut di %@";
 "settings.cli.not_installed" = "Belum dipasang";
-"settings.cli.install.alert.title" = "Aktifkan tasktick CLI";
-"settings.cli.install.alert.message" = "Jalankan perintah ini di Terminal untuk mengaktifkan CLI `tasktick`:\n\n%@";
+"settings.cli.install.alert.title" = "Aktifkan snaprun CLI";
+"settings.cli.install.alert.message" = "Jalankan perintah ini di Terminal untuk mengaktifkan CLI `snaprun`:\n\n%@";
 "settings.cli.install.alert.copy" = "Salin Perintah";
 "settings.cli.install.alert.open_terminal" = "Buka Terminal";
 "settings.cli.install.alert.cancel" = "Batal";
 "settings.cli.uninstall_button" = "Lepas CLI…";
-"settings.cli.uninstall.alert.title" = "Lepas tasktick CLI";
-"settings.cli.uninstall.alert.message" = "Jalankan perintah ini di Terminal untuk menghapus symlink CLI `tasktick`:\n\n%@";
+"settings.cli.uninstall.alert.title" = "Lepas snaprun CLI";
+"settings.cli.uninstall.alert.message" = "Jalankan perintah ini di Terminal untuk menghapus symlink CLI `snaprun`:\n\n%@";
 
 /* Action Toast (Run/Stop/Restart banners) */
 "toast.action.started" = "Dimulai";
 "toast.action.stopped" = "Dihentikan";
 "toast.action.restarted" = "Dimulai ulang";
 "toast.action.failed" = "Aksi gagal";
-"toast.action.failed.notReady" = "TaskTick sedang memulai";
+"toast.action.failed.notReady" = "SnapRun sedang memulai";
 "toast.action.failed.taskNotFound" = "Tugas tidak ditemukan";
 
-"cli.repair.title" = "Perbarui tautan tasktick CLI";
+"cli.repair.title" = "Perbarui tautan snaprun CLI";
 "cli.repair.message" = "%@ menunjuk ke jalur CLI lama. Perbarui sekarang? (Memerlukan izin admin)";
 "cli.repair.update_button" = "Perbarui Sekarang";
 "cli.repair.later_button" = "Nanti";
-"cli.repair.success.title" = "tasktick CLI diperbarui";
+"cli.repair.success.title" = "snaprun CLI diperbarui";
 "cli.repair.success.message" = "%@ kini menunjuk ke biner CLI yang dibundel.";
 
 /* Time */

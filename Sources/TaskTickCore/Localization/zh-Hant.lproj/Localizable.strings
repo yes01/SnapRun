@@ -1,5 +1,5 @@
 /* App */
-"app.name" = "TaskTick";
+"app.name" = "SnapRun";
 
 /* Menu Bar */
 "menubar.open" = "開啟";
@@ -200,7 +200,7 @@
 "notification.succeeded" = "成功";
 "notification.failed" = "失敗";
 "notification.denied.title" = "通知權限未開啟";
-"notification.denied.message" = "TaskTick 想傳送任務執行結果的通知，但系統已停用了通知權限。請至系統設定中重新開啟。";
+"notification.denied.message" = "SnapRun 想傳送任務執行結果的通知，但系統已停用了通知權限。請至系統設定中重新開啟。";
 "notification.denied.open_settings" = "開啟系統設定";
 "notification.denied.later" = "稍後再說";
 
@@ -234,7 +234,7 @@
 "toast.log.cleared" = "已清理殘留日誌";
 
 /* Quit confirmation */
-"quit.confirm.title" = "結束 TaskTick？";
+"quit.confirm.title" = "結束 SnapRun？";
 "quit.confirm.message" = "%d 個指令稿仍在執行中，結束後將立即終止它們：";
 "quit.confirm.cancel" = "取消";
 "quit.confirm.quit" = "結束並終止";
@@ -242,7 +242,7 @@
 /* Live log file (manual tasks) */
 "settings.logs.streaming" = "即時日誌檔案";
 "settings.logs.stream_to_file" = "將手動任務輸出寫入日誌檔案";
-"settings.logs.stream_to_file.hint" = "每個手動任務最近一次執行會寫入 ~/Library/Logs/TaskTick/<任務名稱>.log，方便用 tail -f 或主控台 App 即時檢視。新一次執行會覆寫舊內容。";
+"settings.logs.stream_to_file.hint" = "每個手動任務最近一次執行會寫入 ~/Library/Logs/SnapRun/<任務名稱>.log，方便用 tail -f 或主控台 App 即時檢視。新一次執行會覆寫舊內容。";
 "settings.logs.reveal_directory" = "在 Finder 中顯示";
 "task.detail.live_log_file" = "即時日誌檔案";
 "task.detail.live_log.reveal" = "在 Finder 顯示";
@@ -363,17 +363,17 @@
 "settings.updates.new_version" = "新版本可用: %@";
 
 "settings.about" = "關於";
-"settings.about.section" = "關於 TaskTick";
+"settings.about.section" = "關於 SnapRun";
 "settings.about.version" = "版本";
 "settings.about.build" = "建構號";
 "settings.about.github" = "GitHub 首頁";
 "settings.about.issues" = "回報問題";
 "settings.about.sponsor" = "贊助支持";
 "settings.about.copyright" = "© 2026 lifedever. GPL-3.0 授權條款.";
-"settings.about.description" = "一款原生 macOS 排程任務管理應用程式。無需 crontab，無需 launchd，交給 TaskTick。";
+"settings.about.description" = "一款原生 macOS 排程任務管理應用程式。無需 crontab，無需 launchd，交給 SnapRun。";
 
 /* Commands */
-"command.about" = "關於 TaskTick";
+"command.about" = "關於 SnapRun";
 "command.check_updates" = "檢查更新...";
 "command.new_task" = "新增任務";
 "command.import" = "匯入任務...";
@@ -404,7 +404,7 @@
 /* Crontab Import */
 "command.import_crontab" = "從系統 Crontab 匯入...";
 "crontab.import.title" = "匯入系統 Crontab";
-"crontab.import.description" = "選擇要匯入為 TaskTick 任務的 crontab 項目。";
+"crontab.import.description" = "選擇要匯入為 SnapRun 任務的 crontab 項目。";
 "crontab.import.empty" = "無 Crontab 項目";
 "crontab.import.empty_description" = "系統 crontab 中沒有找到活躍的排程任務。";
 "crontab.import.select_all" = "全選";
@@ -417,12 +417,12 @@
 "crontab.comment.no" = "保留";
 
 /* Update Dialog */
-"update.available.title" = "新版本的 TaskTick 已經發佈";
-"update.available.message" = "TaskTick %@ 可供下載，您目前的版本是 %@。要現在下載嗎？";
+"update.available.title" = "新版本的 SnapRun 已經發佈";
+"update.available.message" = "SnapRun %@ 可供下載，您目前的版本是 %@。要現在下載嗎？";
 "update.skip" = "略過這個版本";
 "update.remind_later" = "稍後提醒我";
 "update.install" = "安裝更新";
-"update.downloading.title" = "正在更新 TaskTick";
+"update.downloading.title" = "正在更新 SnapRun";
 "update.downloading" = "正在下載更新...";
 "update.ready" = "可以開始安裝了";
 "update.install_restart" = "安裝並重新啟動應用程式";
@@ -430,7 +430,7 @@
 "update.check_failed" = "檢查更新失敗";
 "update.check_failed.hint" = "無法連線至更新伺服器，請檢查網路連線後重試。";
 "update.no_updates" = "已是最新版本！";
-"update.no_updates.message" = "TaskTick %@ 是目前最新版本。";
+"update.no_updates.message" = "SnapRun %@ 是目前最新版本。";
 "update.download_error" = "下載失敗";
 "update.dmg_error" = "更新失敗";
 "update.dmg_error.message" = "下載的磁碟映像檔已損壞，請重新下載更新。";
@@ -445,7 +445,7 @@
 "error.export_failed.message" = "無法寫入匯出檔案：\n%@";
 "error.import_failed.title" = "匯入失敗";
 "error.import_read_failed" = "無法讀取所選檔案：\n%@";
-"error.import_decode_failed" = "檔案不是有效的 TaskTick 匯出檔案：\n%@";
+"error.import_decode_failed" = "檔案不是有效的 SnapRun 匯出檔案：\n%@";
 "error.import_save_failed" = "匯入的任務無法儲存：\n%@";
 "error.delete_failed.title" = "刪除失敗";
 "error.delete_failed.message" = "項目已從介面移除，但變更未能儲存。重新啟動後可能會再次出現。\n\n%@";
@@ -489,11 +489,11 @@
 "editor.shortcut.open_app" = "開啟捷徑 App";
 "editor.shortcut.retry" = "重試";
 "editor.shortcut.refresh" = "重新整理清單";
-"editor.shortcut.hint" = "TaskTick 將透過 `shortcuts run` 觸發選中的捷徑。";
+"editor.shortcut.hint" = "SnapRun 將透過 `shortcuts run` 觸發選中的捷徑。";
 "editor.shortcut.load_failed" = "載入捷徑清單失敗。";
 "editor.shortcut.placeholder" = "選擇一個捷徑";
 "task.detail.shortcut" = "捷徑";
-"task.detail.shortcut.hint" = "TaskTick 會透過 `shortcuts run` 觸發它。";
+"task.detail.shortcut.hint" = "SnapRun 會透過 `shortcuts run` 觸發它。";
 
 /* Default Template Names & Notes */
 "default_template.category.database" = "資料庫備份";
@@ -550,32 +550,32 @@
 
 /* Settings → Command Line */
 "settings.cli.section.title" = "命令列";
-"settings.cli.description" = "啟用 `tasktick` 命令列工具，讓你在終端、指令稿和 Raycast 中控制 TaskTick。";
+"settings.cli.description" = "啟用 `snaprun` 命令列工具，讓你在終端、指令稿和 Raycast 中控制 SnapRun。";
 "settings.cli.enable_button" = "啟用 CLI…";
 "settings.cli.installed" = "已連結到 %@";
 "settings.cli.not_installed" = "未安裝";
-"settings.cli.install.alert.title" = "啟用 tasktick CLI";
-"settings.cli.install.alert.message" = "在終端中執行以下指令以啟用 `tasktick`：\n\n%@";
+"settings.cli.install.alert.title" = "啟用 snaprun CLI";
+"settings.cli.install.alert.message" = "在終端中執行以下指令以啟用 `snaprun`：\n\n%@";
 "settings.cli.install.alert.copy" = "複製指令";
 "settings.cli.install.alert.open_terminal" = "開啟終端";
 "settings.cli.install.alert.cancel" = "取消";
 "settings.cli.uninstall_button" = "解除安裝 CLI…";
-"settings.cli.uninstall.alert.title" = "解除安裝 tasktick CLI";
-"settings.cli.uninstall.alert.message" = "在終端中執行以下指令以解除安裝 `tasktick`：\n\n%@";
+"settings.cli.uninstall.alert.title" = "解除安裝 snaprun CLI";
+"settings.cli.uninstall.alert.message" = "在終端中執行以下指令以解除安裝 `snaprun`：\n\n%@";
 
 /* Action Toast (Run/Stop/Restart banners) */
 "toast.action.started" = "已啟動";
 "toast.action.stopped" = "已停止";
 "toast.action.restarted" = "已重啟";
 "toast.action.failed" = "操作失敗";
-"toast.action.failed.notReady" = "TaskTick 正在啟動";
+"toast.action.failed.notReady" = "SnapRun 正在啟動";
 "toast.action.failed.taskNotFound" = "任務未找到";
 
-"cli.repair.title" = "更新 tasktick CLI 連結";
+"cli.repair.title" = "更新 snaprun CLI 連結";
 "cli.repair.message" = "%@ 指向舊的 CLI 路徑。是否立即更新？（需要管理員權限）";
 "cli.repair.update_button" = "立即更新";
 "cli.repair.later_button" = "稍後";
-"cli.repair.success.title" = "tasktick CLI 已更新";
+"cli.repair.success.title" = "snaprun CLI 已更新";
 "cli.repair.success.message" = "%@ 已指向新的 CLI 二進位檔。";
 
 /* Time */

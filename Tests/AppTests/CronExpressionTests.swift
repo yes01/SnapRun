@@ -1,6 +1,6 @@
 import Testing
-@testable import TaskTickApp
-import TaskTickCore
+@testable import SnapRunApp
+import SnapRunCore
 
 @Suite("CronExpression Tests")
 struct CronExpressionTests {

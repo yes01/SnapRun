@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import UserNotifications
-import TaskTickCore
+import SnapRunCore
 
 /// Manages system notifications for task execution results.
 final class NotificationManager: NSObject, @unchecked Sendable {

@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 import ServiceManagement
-import TaskTickCore
+import SnapRunCore
 
 @MainActor
 struct SettingsView: View {
@@ -316,7 +316,7 @@ struct SettingsView: View {
         // Flush in-flight edits before swapping data so the user's last save isn't
         // silently dropped. Non-fatal — restore proceeds either way.
         do {
-            try TaskTickApp._sharedModelContainer.mainContext.save()
+            try SnapRunApp._sharedModelContainer.mainContext.save()
         } catch {
             NSLog("⚠️ Pre-restore save failed (unsaved edits will be lost): \(error.localizedDescription)")
         }
@@ -540,7 +540,7 @@ struct SettingsView: View {
     private func runLogCleanup() {
         let days = max(logRetentionDays, 0)
         let cutoff = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
-        let container = TaskTickApp._sharedModelContainer
+        let container = SnapRunApp._sharedModelContainer
 
         isCleaningLogs = true
         Task {
@@ -622,19 +622,19 @@ struct SettingsView: View {
                 LabeledContent(L10n.tr("settings.about.version"), value: updateChecker.currentVersion)
                 LabeledContent(L10n.tr("settings.about.build"), value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
 
-                Text("A native macOS app for managing scheduled tasks.\nNo crontab, no launchd — just TaskTick.")
+                Text("A native macOS app for managing scheduled tasks.\nNo crontab, no launchd — just SnapRun.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 2)
 
-                Text("一款原生 macOS 定时任务管理应用。\n无需 crontab，无需 launchd，交给 TaskTick。")
+                Text("一款原生 macOS 定时任务管理应用。\n无需 crontab，无需 launchd，交给 SnapRun。")
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 2)
 
-                Link(L10n.tr("settings.about.github"), destination: URL(string: "https://github.com/lifedever/TaskTick")!)
+                Link(L10n.tr("settings.about.github"), destination: URL(string: "https://github.com/yes01/SnapRun")!)
                     .pointerCursor()
-                Link(L10n.tr("settings.about.issues"), destination: URL(string: "https://github.com/lifedever/TaskTick/issues")!)
+                Link(L10n.tr("settings.about.issues"), destination: URL(string: "https://github.com/yes01/SnapRun/issues")!)
                     .pointerCursor()
                 Link(L10n.tr("settings.about.sponsor"), destination: URL(string: "https://www.lifedever.com/sponsor/")!)
                     .pointerCursor()

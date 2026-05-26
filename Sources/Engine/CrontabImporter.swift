@@ -1,6 +1,6 @@
 import Foundation
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Imports tasks from the system crontab.
 struct CrontabImporter {
@@ -185,7 +185,7 @@ struct CrontabImporter {
         let updatedLines = lines.map { line -> String in
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             if originalLines.contains(trimmed) {
-                return "# [TaskTick imported] " + line
+                return "# [SnapRun imported] " + line
             }
             return line
         }

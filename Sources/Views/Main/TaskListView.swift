@@ -1,6 +1,6 @@
 import SwiftUI
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 enum TaskFilter: String, CaseIterable {
     case all

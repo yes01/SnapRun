@@ -1,6 +1,6 @@
 import SwiftUI
 import SwiftData
-import TaskTickCore
+import SnapRunCore
 
 /// Content view displayed in the menu bar popover.
 @MainActor

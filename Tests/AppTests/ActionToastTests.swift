@@ -1,6 +1,6 @@
 import XCTest
-import TaskTickCore
-@testable import TaskTickApp
+import SnapRunCore
+@testable import SnapRunApp
 
 final class ActionToastTests: XCTestCase {
     override func setUp() {

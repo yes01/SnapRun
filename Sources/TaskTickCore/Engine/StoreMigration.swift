@@ -5,7 +5,7 @@ import Foundation
 /// namespaced subdirectory.
 ///
 /// Background: pre-v1.4.2 builds wrote `default.store` (release) or
-/// `tasktick-dev.store` (dev) directly into `~/Library/Application Support/`.
+/// `snaprun-dev.store` (dev) directly into `~/Library/Application Support/`.
 /// Apple explicitly warns against this:
 ///
 /// > Two or more apps that use the default location and name will either
@@ -42,7 +42,7 @@ import Foundation
 ///    throw there would crash the app on launch. Any failure is logged and
 ///    the caller falls back to opening the (possibly empty) new path.
 public enum StoreMigration {
-    private static let logger = Logger(subsystem: "com.lifedever.TaskTick", category: "StoreMigration")
+    private static let logger = Logger(subsystem: "com.lifedever.SnapRun", category: "StoreMigration")
     private static let tmpSuffix = ".migrating"
     /// All three SwiftData SQLite sidecars. Order matters for the rename phase.
     private static let extensions = ["-wal", "-shm", ""]
@@ -56,7 +56,7 @@ public enum StoreMigration {
         let isDev = BundleContext.isDev
         // Filename kept identical to legacy so old DatabaseBackup `.store`-dir
         // backups keep working (they record the legacy filename verbatim).
-        let filename = isDev ? "tasktick-dev.store" : "default.store"
+        let filename = isDev ? "snaprun-dev.store" : "default.store"
 
         let legacyURL = appSupport.appendingPathComponent(filename)
         let namespaceDir = appSupport.appendingPathComponent(bundleID)

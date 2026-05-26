@@ -1,11 +1,11 @@
 import ArgumentParser
 @preconcurrency import Foundation
-import TaskTickCore
+import SnapRunCore
 
 struct RunCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "run",
-        abstract: "Start a task. Wakes TaskTick.app if not running."
+        abstract: "Start a task. Wakes SnapRun.app if not running."
     )
 
     @Argument(help: "Task identifier.")
@@ -43,7 +43,7 @@ func dispatch(action: NotificationBridge.CLIAction, identifier: String, json: Bo
     do {
         task = try resolver.resolve(identifier)
     } catch let err as TaskResolverError {
-        FileHandle.standardError.write(Data("tasktick: \(err)\n".utf8))
+        FileHandle.standardError.write(Data("snaprun: \(err)\n".utf8))
         throw ExitCode(1)
     }
 
@@ -69,7 +69,7 @@ func dispatch(action: NotificationBridge.CLIAction, identifier: String, json: Bo
         // Wake the GUI and let it process the URL Scheme directly.
         let ok = GUILauncher.launchAndWait(action: action, taskId: task.id)
         if !ok {
-            FileHandle.standardError.write(Data("tasktick: TaskTick.app failed to launch within 10s\n".utf8))
+            FileHandle.standardError.write(Data("snaprun: SnapRun.app failed to launch within 10s\n".utf8))
             throw ExitCode(1)
         }
     }
@@ -98,7 +98,7 @@ private func printSuccess(action: NotificationBridge.CLIAction, name: String, js
             case .run: return "Started"
             case .stop: return "Stopped"
             case .restart: return "Restarted"
-            case .reveal: return "Revealed in TaskTick"
+            case .reveal: return "Revealed in SnapRun"
             }
         }()
         print("✓ \(verb): \(name)")
@@ -126,7 +126,7 @@ func runAndWait(identifier: String, json: Bool) async throws {
     do {
         task = try resolver.resolve(identifier)
     } catch let err as TaskResolverError {
-        FileHandle.standardError.write(Data("tasktick: \(err)\n".utf8))
+        FileHandle.standardError.write(Data("snaprun: \(err)\n".utf8))
         throw ExitCode(1)
     }
 
@@ -198,7 +198,7 @@ func runAndWait(identifier: String, json: Bool) async throws {
             let ok = GUILauncher.launchAndWait(action: .run, taskId: task.id)
             if !ok {
                 _ = runtime.finish(center: center)
-                FileHandle.standardError.write(Data("tasktick: TaskTick.app failed to launch within 10s\n".utf8))
+                FileHandle.standardError.write(Data("snaprun: SnapRun.app failed to launch within 10s\n".utf8))
                 cont.resume(throwing: ExitCode(1))
                 return
             }

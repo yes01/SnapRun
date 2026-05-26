@@ -1,5 +1,5 @@
 import SwiftUI
-import TaskTickCore
+import SnapRunCore
 
 /// A small badge displaying execution status with color and icon.
 @MainActor
