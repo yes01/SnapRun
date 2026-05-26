@@ -70,6 +70,3 @@ cd SnapRun
 - The internal SwiftPM targets and CLI command still use `TaskTick` / `tasktick` for compatibility during the rename.
 - If you need the CLI today, use `swift run tasktick --help`.
 
-## License
-
-GPL-3.0 (c) [yes01](https://github.com/yes01)
