@@ -18,8 +18,9 @@ struct TaskSchedulerTests {
     // branch and return nil, blocking the scheduler from picking it up.
     @Test("Every-minute task without scheduledDate computes future nextRunAt")
     @MainActor
-    func everyMinuteWithoutScheduledDateComputesNextRun() {
-        let task = ScheduledTask(
+    func everyMinuteWithoutScheduledDateComputesNextRun() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "issue-30",
             scriptBody: "echo hi",
             scheduledDate: nil,
@@ -41,8 +42,12 @@ struct TaskSchedulerTests {
 
     @Test("Legacy interval task still honors intervalSeconds")
     @MainActor
-    func legacyIntervalTaskStillWorks() {
-        let task = ScheduledTask(name: "legacy", scriptBody: "echo hi")
+    func legacyIntervalTaskStillWorks() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
+            name: "legacy",
+            scriptBody: "echo hi"
+        )
         task.scheduledDate = nil
         task.intervalSeconds = 300
         task.cronExpression = nil
@@ -61,8 +66,9 @@ struct TaskSchedulerTests {
     // up a normal repeat schedule.
     @Test("Shortcut task with repeatType.everyMinute schedules normally")
     @MainActor
-    func shortcutTaskRespectsRepeat() {
-        let task = ScheduledTask(
+    func shortcutTaskRespectsRepeat() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "shortcut",
             scriptBody: "",
             repeatType: .everyMinute
@@ -84,8 +90,12 @@ struct TaskSchedulerTests {
 
     @Test("New ScheduledTask has nil shortcutName")
     @MainActor
-    func shortcutNameDefaultsToNil() {
-        let task = ScheduledTask(name: "fresh", scriptBody: "echo hi")
+    func shortcutNameDefaultsToNil() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
+            name: "fresh",
+            scriptBody: "echo hi"
+        )
         #expect(task.shortcutName == nil)
     }
 }

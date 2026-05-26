@@ -19,8 +19,10 @@ jobs:
         include:
           - runner: macos-14
             arch: arm64
-          - runner: macos-13
+            developer_dir: /Applications/Xcode_16.2.app/Contents/Developer
+          - runner: macos-14-large
             arch: x86_64
+            developer_dir: /Applications/Xcode_16.2.app/Contents/Developer
 
     steps:
       - name: Check out repository
@@ -37,16 +39,16 @@ jobs:
           fi
           echo "value=${VERSION}" >> "$GITHUB_OUTPUT"
 
-      - name: Set up Swift 6
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: "6.0"
+      - name: Select Xcode toolchain
+        run: echo "DEVELOPER_DIR=${{ matrix.developer_dir }}" >> "$GITHUB_ENV"
 
-      - name: Show Swift toolchain
-        run: swift --version
+      - name: Show Xcode and Swift toolchain
+        run: |
+          xcodebuild -version
+          xcrun swift --version
 
       - name: Run tests
-        run: swift test
+        run: xcrun swift test
 
       - name: Package macOS app
         run: bash ./scripts/package-macos.sh "${{ steps.version.outputs.value }}" .release-artifacts

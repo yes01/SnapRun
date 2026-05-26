@@ -1,5 +1,5 @@
 import ArgumentParser
-import Foundation
+@preconcurrency import Foundation
 import TaskTickCore
 
 struct RunCommand: AsyncParsableCommand {
@@ -143,18 +143,20 @@ func runAndWait(identifier: String, json: Bool) async throws {
     FileHandle.standardError.write(Data("✓ Started: \(taskName)\n".utf8))
 
     let exitCode: Int32 = try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Int32, Error>) in
+        let runtime = CommandRuntime()
+
         // Ctrl+C handler — task continues in GUI; CLI just stops watching.
         signal(SIGINT, SIG_IGN)
         let sigSrc = DispatchSource.makeSignalSource(signal: SIGINT, queue: .main)
         sigSrc.setEventHandler {
+            guard runtime.finish(center: center) else { return }
             cont.resume(throwing: ExitCode(130))
         }
         sigSrc.resume()
-
-        var observers: [NSObjectProtocol] = []
+        runtime.addSignalSource(sigSrc)
 
         // Subscribe to chunks BEFORE dispatching to avoid losing first lines.
-        observers.append(center.addObserver(forName: chunkName, object: nil, queue: .main) { note in
+        let chunkObserver = center.addObserver(forName: chunkName, object: nil, queue: .main) { note in
             guard
                 let info = note.userInfo,
                 let id = info["id"] as? String,
@@ -175,18 +177,19 @@ func runAndWait(identifier: String, json: Bool) async throws {
                     print(text, terminator: "")
                 }
             }
-        })
+        }
+        runtime.addObserver(chunkObserver)
 
-        observers.append(center.addObserver(forName: completedName, object: nil, queue: .main) { note in
+        let completedObserver = center.addObserver(forName: completedName, object: nil, queue: .main) { note in
             guard let id = note.userInfo?["id"] as? String, id == targetId else { return }
             let exit = (note.userInfo?["exitCode"] as? Int) ?? 0
-            for o in observers { center.removeObserver(o) }
-            sigSrc.cancel()
+            guard runtime.finish(center: center) else { return }
             let durMs = Int(Date().timeIntervalSince(startedAt) * 1000)
             let dur = durMs >= 1000 ? "\(durMs / 1000)s" : "\(durMs)ms"
             FileHandle.standardError.write(Data("✓ Completed in \(dur) (exit \(exit))\n".utf8))
             cont.resume(returning: Int32(exit))
-        })
+        }
+        runtime.addObserver(completedObserver)
 
         // Now dispatch run — observer is already listening.
         if GUILauncher.isRunning() {
@@ -194,8 +197,7 @@ func runAndWait(identifier: String, json: Bool) async throws {
         } else {
             let ok = GUILauncher.launchAndWait(action: .run, taskId: task.id)
             if !ok {
-                for o in observers { center.removeObserver(o) }
-                sigSrc.cancel()
+                _ = runtime.finish(center: center)
                 FileHandle.standardError.write(Data("tasktick: TaskTick.app failed to launch within 10s\n".utf8))
                 cont.resume(throwing: ExitCode(1))
                 return

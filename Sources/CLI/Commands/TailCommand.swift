@@ -1,5 +1,5 @@
 import ArgumentParser
-import Foundation
+@preconcurrency import Foundation
 import TaskTickCore
 
 struct TailCommand: AsyncParsableCommand {
@@ -50,17 +50,19 @@ struct TailCommand: AsyncParsableCommand {
 
         // Use a Continuation to bridge Distributed Notifications into async/await.
         try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
+            let runtime = CommandRuntime()
+
             // Install signal handler for Ctrl+C → exit 130.
             signal(SIGINT, SIG_IGN)
             let sigSrc = DispatchSource.makeSignalSource(signal: SIGINT, queue: .main)
             sigSrc.setEventHandler {
+                guard runtime.finish(center: center) else { return }
                 cont.resume(throwing: ExitCode(130))
             }
             sigSrc.resume()
+            runtime.addSignalSource(sigSrc)
 
-            var observers: [NSObjectProtocol] = []
-
-            observers.append(center.addObserver(forName: chunkName, object: nil, queue: .main) { note in
+            let chunkObserver = center.addObserver(forName: chunkName, object: nil, queue: .main) { note in
                 guard
                     let info = note.userInfo,
                     let id = info["id"] as? String,
@@ -78,14 +80,15 @@ struct TailCommand: AsyncParsableCommand {
                     let prefix = (stream == "stderr") ? "[stderr] " : ""
                     print(prefix + text, terminator: "")
                 }
-            })
+            }
+            runtime.addObserver(chunkObserver)
 
-            observers.append(center.addObserver(forName: completedName, object: nil, queue: .main) { note in
+            let completedObserver = center.addObserver(forName: completedName, object: nil, queue: .main) { note in
                 guard let id = note.userInfo?["id"] as? String, id == targetId else { return }
-                for o in observers { center.removeObserver(o) }
-                sigSrc.cancel()
+                guard runtime.finish(center: center) else { return }
                 cont.resume(returning: ())
-            })
+            }
+            runtime.addObserver(completedObserver)
         }
     }
 }

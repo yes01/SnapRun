@@ -58,7 +58,7 @@ mkdir -p "${OUTPUT_DIR}"
 
 echo "Packaging ${APP_NAME} ${VERSION} for ${ARCH}"
 
-swift build \
+xcrun swift build \
   --package-path "${PROJECT_ROOT}" \
   --configuration release \
   --build-path "${BUILD_DIR}"
