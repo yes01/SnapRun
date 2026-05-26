@@ -27,11 +27,11 @@ jobs:
         run: xcrun swift test
 
       - name: Package macOS app
-        run: bash ./scripts/package-macos.sh 0.0.0-ci .ci-artifacts
+        run: bash ./scripts/package-macos.sh 0.0.0-ci ci-artifacts
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macos-${{ runner.arch }}-artifacts
-          path: .ci-artifacts
+          path: ci-artifacts
           if-no-files-found: error

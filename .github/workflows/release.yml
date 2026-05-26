@@ -53,13 +53,13 @@ jobs:
         run: xcrun swift test
 
       - name: Package macOS app
-        run: bash ./scripts/package-macos.sh "${{ steps.version.outputs.value }}" .release-artifacts
+        run: bash ./scripts/package-macos.sh "${{ steps.version.outputs.value }}" release-artifacts
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
         with:
           name: SnapRun-${{ steps.version.outputs.value }}-${{ matrix.arch }}
-          path: .release-artifacts/*.dmg
+          path: release-artifacts/*.dmg
           if-no-files-found: error
 
   publish:
