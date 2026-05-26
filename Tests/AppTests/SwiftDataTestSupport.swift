@@ -13,6 +13,7 @@ final class SwiftDataTestFixture {
     let container: ModelContainer
 
     init() throws {
+        Bundle.injectTestBundleIdentifier()
         // Provide a stable-looking URL even though storage is in-memory.
         self.storeURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("snaprun-app-test-\(UUID().uuidString)")
@@ -69,5 +70,34 @@ final class SwiftDataTestFixture {
         )
         context.insert(task)
         return task
+    }
+}
+
+// MARK: - Bundle Swizzling for CI Support
+extension Bundle {
+    private static let swizzleBundleIdentifier: Void = {
+        let originalSelector = #selector(getter: Bundle.bundleIdentifier)
+        let swizzledSelector = #selector(getter: Bundle.swizzled_bundleIdentifier)
+        
+        guard let originalMethod = class_getInstanceMethod(Bundle.self, originalSelector),
+              let swizzledMethod = class_getInstanceMethod(Bundle.self, swizzledSelector) else {
+            return
+        }
+        
+        method_exchangeImplementations(originalMethod, swizzledMethod)
+    }()
+    
+    @objc var swizzled_bundleIdentifier: String? {
+        if let originalId = self.swizzled_bundleIdentifier {
+            return originalId
+        }
+        if self == Bundle.main {
+            return "com.lifedever.SnapRun"
+        }
+        return nil
+    }
+    
+    static func injectTestBundleIdentifier() {
+        _ = swizzleBundleIdentifier
     }
 }
