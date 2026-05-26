@@ -4,22 +4,31 @@ import SwiftData
 
 @MainActor
 final class SwiftDataTestFixture {
+    // storeURL is kept for API compatibility but points nowhere when using
+    // the in-memory configuration (isStoredInMemoryOnly: true).  The in-memory
+    // store avoids the "Unable to determine Bundle Name" fatal error that
+    // SwiftData's CoreData backend triggers on CI runners where the test
+    // binary has no bundle identifier.
     let storeURL: URL
     let container: ModelContainer
 
     init() throws {
-        let directory = FileManager.default.temporaryDirectory
-            .appendingPathComponent("tasktick-app-test-\(UUID().uuidString)", isDirectory: true)
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        self.storeURL = directory.appendingPathComponent("default.store")
+        // Provide a stable-looking URL even though storage is in-memory.
+        self.storeURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("tasktick-app-test-\(UUID().uuidString)")
+            .appendingPathComponent("default.store")
 
         let schema = Schema([ScheduledTask.self, ExecutionLog.self])
-        let configuration = ModelConfiguration(schema: schema, url: storeURL, allowsSave: true)
+        // isStoredInMemoryOnly = true → no bundle-name look-up, no disk I/O.
+        let configuration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: true
+        )
         self.container = try ModelContainer(for: schema, configurations: [configuration])
     }
 
     deinit {
-        try? FileManager.default.removeItem(at: storeURL.deletingLastPathComponent())
+        // Nothing on disk to remove when using the in-memory store.
     }
 
     var context: ModelContext { container.mainContext }
