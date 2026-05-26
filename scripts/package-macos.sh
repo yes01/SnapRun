@@ -2,9 +2,9 @@
 set -euo pipefail
 
 APP_NAME="SnapRun"
-SPM_TARGET="TaskTickApp"
-CLI_TARGET="tasktick"
-BUNDLE_ID="com.lifedever.TaskTick"
+SPM_TARGET="SnapRunApp"
+CLI_TARGET="snaprun"
+BUNDLE_ID="com.lifedever.SnapRun"
 MIN_MACOS="14.0"
 
 VERSION="${1:-0.0.0-ci}"
@@ -129,10 +129,10 @@ cat > "${APP_BUNDLE}/Contents/Info.plist" <<PLIST
     <array>
         <dict>
             <key>CFBundleURLName</key>
-            <string>com.lifedever.TaskTick.urlscheme</string>
+            <string>com.lifedever.SnapRun.urlscheme</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>tasktick</string>
+                <string>snaprun</string>
             </array>
         </dict>
     </array>
