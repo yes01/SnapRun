@@ -20,9 +20,6 @@ jobs:
           - runner: macos-14
             arch: arm64
             developer_dir: /Applications/Xcode_16.2.app/Contents/Developer
-          - runner: macos-14-large
-            arch: x86_64
-            developer_dir: /Applications/Xcode_16.2.app/Contents/Developer
 
     steps:
       - name: Check out repository
