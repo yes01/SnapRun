@@ -21,6 +21,7 @@ final class SwiftDataTestFixture {
         let schema = Schema([ScheduledTask.self, ExecutionLog.self])
         // isStoredInMemoryOnly = true → no bundle-name look-up, no disk I/O.
         let configuration = ModelConfiguration(
+            "SnapRunTests",
             schema: schema,
             isStoredInMemoryOnly: true
         )

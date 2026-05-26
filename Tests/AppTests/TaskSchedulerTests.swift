@@ -17,14 +17,15 @@ struct TaskSchedulerTests {
     // sub-day repeat (every minute) used to land in the legacy interval
     // branch and return nil, blocking the scheduler from picking it up.
     //
-    // NOTE: We create ScheduledTask directly (without ModelContainer) so that
-    // this test does not require a SwiftData store.  SwiftData's CoreData
-    // backend calls Bundle.main.bundleIdentifier during ModelContainer init,
-    // which crashes on CI runners where the test binary has no bundle ID.
+    // NOTE: We create ScheduledTask via SwiftDataTestFixture so that SwiftData
+    // manages relationships and property access correctly. By providing an
+    // explicit storeURL and setting isStoredInMemoryOnly: true in the fixture,
+    // SwiftData does not call Bundle.main.bundleIdentifier, avoiding the CI crash.
     @Test("Every-minute task without scheduledDate computes future nextRunAt")
     @MainActor
-    func everyMinuteWithoutScheduledDateComputesNextRun() {
-        let task = ScheduledTask(
+    func everyMinuteWithoutScheduledDateComputesNextRun() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "issue-30",
             scriptBody: "echo hi",
             scheduledDate: nil,
@@ -46,8 +47,9 @@ struct TaskSchedulerTests {
 
     @Test("Legacy interval task still honors intervalSeconds")
     @MainActor
-    func legacyIntervalTaskStillWorks() {
-        let task = ScheduledTask(name: "legacy", scriptBody: "echo hi")
+    func legacyIntervalTaskStillWorks() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(name: "legacy", scriptBody: "echo hi")
         task.scheduledDate = nil
         task.intervalSeconds = 300
         task.cronExpression = nil
@@ -66,8 +68,9 @@ struct TaskSchedulerTests {
     // up a normal repeat schedule.
     @Test("Shortcut task with repeatType.everyMinute schedules normally")
     @MainActor
-    func shortcutTaskRespectsRepeat() {
-        let task = ScheduledTask(
+    func shortcutTaskRespectsRepeat() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(
             name: "shortcut",
             scriptBody: "",
             repeatType: .everyMinute
@@ -89,8 +92,9 @@ struct TaskSchedulerTests {
 
     @Test("New ScheduledTask has nil shortcutName")
     @MainActor
-    func shortcutNameDefaultsToNil() {
-        let task = ScheduledTask(name: "fresh", scriptBody: "echo hi")
+    func shortcutNameDefaultsToNil() throws {
+        let fixture = try SwiftDataTestFixture()
+        let task = fixture.makeTask(name: "fresh", scriptBody: "echo hi")
         #expect(task.shortcutName == nil)
     }
 }
