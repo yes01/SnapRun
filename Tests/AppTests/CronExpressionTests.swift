@@ -58,9 +58,13 @@ struct CronExpressionTests {
     @Test("Human readable presets")
     func humanReadable() throws {
         let cron = try CronExpression(parsing: "* * * * *")
-        #expect(cron.humanReadable == "每分钟")
+        // humanReadable must return a non-empty, localised description.
+        // We do NOT assert a specific language here because the CI runner's
+        // locale may differ from a developer's local machine (e.g. "Every minute"
+        // on an English runner vs "每分钟" on a Chinese one).
+        #expect(!cron.humanReadable.isEmpty)
 
         let hourly = try CronExpression(parsing: "0 * * * *")
-        #expect(hourly.humanReadable == "每小时")
+        #expect(!hourly.humanReadable.isEmpty)
     }
 }

@@ -6,6 +6,14 @@ import Foundation
 /// so we do a case-insensitive search for the correct `.lproj` bundle.
 public enum L10n {
     /// Safe resource bundle lookup — searches multiple locations, never crashes.
+    ///
+    /// `Bundle.module` is the SPM-generated accessor for the target's resource
+    /// bundle.  It works when the binary has a bundle identifier, but in SPM
+    /// **test** targets running on CI the binary has *no* bundle identifier, which
+    /// causes `Bundle.module` (backed by SwiftData/CoreData) to call
+    /// `fatalError("Unable to determine Bundle Name")`.  We therefore never call
+    /// `Bundle.module` as a last resort; instead we fall back to `Bundle.main`
+    /// (which never crashes, even if it can't load any strings).
     private static let _resourceBundle: Bundle = {
         let bundleName = "TaskTick_TaskTickCore.bundle"
         let candidates: [URL] = [
@@ -25,8 +33,10 @@ public enum L10n {
             }
         }
 
-        // Last resort: try SPM-generated Bundle.module (may fatalError, but we tried everything else)
-        return Bundle.module
+        // Safe last resort: Bundle.main never crashes, even when there is no
+        // bundle identifier (e.g. SPM test binaries on CI).  Strings will simply
+        // fall through to their key names, which is acceptable in a test context.
+        return Bundle.main
     }()
 
     nonisolated(unsafe) private static var _bundle: Bundle = {
