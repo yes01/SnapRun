@@ -128,6 +128,18 @@ public enum ScheduleType: String, Codable, CaseIterable, Sendable {
     }
 }
 
+public enum TaskScheduleMode: String, Codable, CaseIterable, Sendable {
+    case standard = "standard"
+    case cron = "cron"
+
+    public var displayName: String {
+        switch self {
+        case .standard: L10n.tr("schedule.mode.standard")
+        case .cron: L10n.tr("schedule.mode.cron")
+        }
+    }
+}
+
 // MARK: - Model
 
 @Model
@@ -267,6 +279,29 @@ public final class ScheduledTask {
         set { customIntervalUnitRaw = newValue.rawValue }
     }
 
+    public var scheduleMode: TaskScheduleMode {
+        if schedule == .cron, let cronExpression, !CronExpression.expressionLines(from: cronExpression).isEmpty {
+            return .cron
+        }
+        return .standard
+    }
+
+    public var cronExpressions: [String] {
+        CronExpression.expressionLines(from: cronExpression ?? "")
+    }
+
+    public var scheduleSummary: String {
+        if isManualOnly {
+            return L10n.tr("schedule.manual_only")
+        }
+        if scheduleMode == .cron {
+            let lines = cronExpressions
+            if lines.isEmpty { return L10n.tr("schedule.cron") }
+            return lines.count == 1 ? "\(L10n.tr("schedule.cron")) · \(lines[0])" : "\(L10n.tr("schedule.cron")) · \(lines.count) \(L10n.tr("schedule.rules"))"
+        }
+        return repeatType.displayName
+    }
+
     public var environmentVariables: [String: String]? {
         get {
             guard let json = environmentVariablesJSON,
@@ -287,6 +322,11 @@ public final class ScheduledTask {
     public var scheduleDescription: String {
         if isManualOnly {
             return L10n.tr("schedule.manual_only")
+        }
+
+        if scheduleMode == .cron {
+            let lines = cronExpressions
+            return lines.isEmpty ? L10n.tr("schedule.cron") : lines.joined(separator: " | ")
         }
 
         var parts: [String] = []

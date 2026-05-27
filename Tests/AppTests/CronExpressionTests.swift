@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 @testable import SnapRunApp
 import SnapRunCore
 
@@ -66,5 +67,30 @@ struct CronExpressionTests {
 
         let hourly = try CronExpression(parsing: "0 * * * *")
         #expect(!hourly.humanReadable.isEmpty)
+    }
+
+    @Test("Multi-line cron picks earliest next fire date")
+    func multiLineNextFireDate() throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 29, hour: 8, minute: 5))!
+        let expressions = """
+        10,40 8-11,14-21 * * 1-5
+        15 8-11,14-21 * * 6,0
+        """
+
+        let next = CronExpression.nextFireDate(for: expressions, after: start)
+        let expected = calendar.date(from: DateComponents(year: 2026, month: 5, day: 29, hour: 8, minute: 10))!
+
+        #expect(next == expected)
+    }
+
+    @Test("Multi-line cron surfaces parse errors with line number")
+    func multiLineParseError() {
+        let error = CronExpression.firstParseError(in: """
+        */30 * * * *
+        bad cron
+        """)
+
+        #expect(error?.contains("Line 2") == true)
     }
 }

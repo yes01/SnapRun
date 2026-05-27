@@ -19,11 +19,14 @@ struct CronEditorView: View {
     ]
 
     var nextFireDescription: String {
-        guard let cron = try? CronExpression(parsing: expression),
-              let nextDate = cron.nextFireDate() else {
+        guard let nextDate = CronExpression.nextFireDate(for: expression) else {
             return L10n.tr("cron.cannot_compute")
         }
         return nextDate.formatted(date: .abbreviated, time: .standard)
+    }
+
+    var validationMessage: String? {
+        CronExpression.firstParseError(in: expression)
     }
 
     var body: some View {
@@ -43,12 +46,27 @@ struct CronEditorView: View {
             }
 
             if isCustom || !Self.presets.contains(where: { $0.value == expression }) {
-                TextField(
-                    L10n.tr("cron.expression.placeholder"),
-                    text: $expression
-                )
-                .textFieldStyle(.roundedBorder)
-                .font(.system(.body, design: .monospaced))
+                TextEditor(text: $expression)
+                    .font(.system(.body, design: .monospaced))
+                    .frame(minHeight: 96)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.separator, lineWidth: 0.5)
+                    )
+
+                Text(L10n.tr("cron.multiline.hint"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            if let validationMessage {
+                HStack(spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+                    Text(validationMessage)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             // Next fire date

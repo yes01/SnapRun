@@ -551,6 +551,6 @@ private struct QuickLauncherRow: View {
 
     private var subtitle: String {
         if isRunning { return L10n.tr("quick_launcher.subtitle.running") }
-        return task.isManualOnly ? L10n.tr("schedule.manual_only") : task.repeatType.displayName
+        return task.scheduleSummary
     }
 }

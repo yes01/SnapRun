@@ -135,6 +135,9 @@
 "schedule.trigger_section" = "触发方式";
 "schedule.manual_only" = "仅手动触发";
 "schedule.manual_only.help" = "不进入定时调度，仅在右键菜单或菜单栏点击运行时执行";
+"schedule.mode.standard" = "常规";
+"schedule.mode.cron" = "Cron";
+"schedule.rules" = "条规则";
 "tasklist.section.scheduled" = "自动调度";
 "tasklist.section.manual" = "手动脚本";
 
@@ -186,6 +189,7 @@
 "cron.next_run" = "下次: %@";
 "cron.cannot_compute" = "无法计算";
 "cron.expression.placeholder" = "分 时 日 月 周";
+"cron.multiline.hint" = "支持多行填写，每行一条 Cron 规则；以 # 开头的行会被忽略。";
 
 /* Execution Status */
 "status.running" = "运行中";

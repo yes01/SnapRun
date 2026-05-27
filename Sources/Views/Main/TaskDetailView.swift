@@ -133,7 +133,7 @@ struct TaskDetailView: View {
                         Text("·")
                             .foregroundStyle(.quaternary)
 
-                        Text(task.isManualOnly ? L10n.tr("schedule.manual_only") : task.repeatType.displayName)
+                        Text(task.scheduleSummary)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
 
@@ -259,36 +259,39 @@ struct TaskDetailView: View {
                     if task.isManualOnly {
                         detailRow(L10n.tr("schedule.trigger_section"), value: L10n.tr("schedule.manual_only"))
                     } else {
-                    // Show scheduled date if set
-                    if let date = task.scheduledDate {
-                        detailRow(L10n.tr("schedule.date"), value: date.formatted(date: .abbreviated, time: .omitted))
-                        detailRow(L10n.tr("schedule.time"), value: date.formatted(date: .omitted, time: .shortened))
-                    }
+                    if task.scheduleMode == .cron {
+                        detailRow(L10n.tr("editor.schedule_type"), value: L10n.tr("schedule.mode.cron"))
+                        detailRow(L10n.tr("task.detail.cron_expression"), value: task.cronExpression ?? "-")
+                    } else {
+                        detailRow(L10n.tr("editor.schedule_type"), value: L10n.tr("schedule.mode.standard"))
 
-                    // Repeat type
-                    detailRow(L10n.tr("schedule.repeat"), value: task.repeatType.displayName)
-
-                    // End repeat
-                    if task.repeatType != .never {
-                        switch task.endRepeatType {
-                        case .never:
-                            detailRow(L10n.tr("schedule.end_repeat"), value: L10n.tr("end_repeat.never"))
-                        case .onDate:
-                            if let endDate = task.endRepeatDate {
-                                detailRow(L10n.tr("schedule.end_repeat"), value: endDate.formatted(date: .abbreviated, time: .omitted))
+                        if let date = task.scheduledDate {
+                            if task.hasDate {
+                                detailRow(L10n.tr("schedule.date"), value: date.formatted(date: .abbreviated, time: .omitted))
                             }
-                        case .afterCount:
-                            if let count = task.endRepeatCount {
-                                detailRow(L10n.tr("schedule.end_repeat"), value: L10n.tr("schedule.after_n_times", count))
+                            if task.hasTime {
+                                detailRow(L10n.tr("schedule.time"), value: date.formatted(date: .omitted, time: .shortened))
                             }
                         }
-                    }
 
-                    // Legacy cron/interval display
-                    if task.scheduledDate == nil {
-                        if task.schedule == .cron {
-                            detailRow(L10n.tr("task.detail.cron_expression"), value: task.cronExpression ?? "-")
-                        } else if let interval = task.intervalSeconds, interval > 0 {
+                        detailRow(L10n.tr("schedule.repeat"), value: task.repeatType.displayName)
+
+                        if task.repeatType != .never {
+                            switch task.endRepeatType {
+                            case .never:
+                                detailRow(L10n.tr("schedule.end_repeat"), value: L10n.tr("end_repeat.never"))
+                            case .onDate:
+                                if let endDate = task.endRepeatDate {
+                                    detailRow(L10n.tr("schedule.end_repeat"), value: endDate.formatted(date: .abbreviated, time: .omitted))
+                                }
+                            case .afterCount:
+                                if let count = task.endRepeatCount {
+                                    detailRow(L10n.tr("schedule.end_repeat"), value: L10n.tr("schedule.after_n_times", count))
+                                }
+                            }
+                        }
+
+                        if task.scheduledDate == nil, let interval = task.intervalSeconds, interval > 0 {
                             detailRow(L10n.tr("task.detail.interval"), value: L10n.tr("task.detail.interval_value", interval))
                         }
                     }

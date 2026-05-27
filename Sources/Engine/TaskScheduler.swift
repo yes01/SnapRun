@@ -273,10 +273,10 @@ final class TaskScheduler: ObservableObject {
             return nil
         }
 
-        // Legacy cron support
+        // Cron support (single or multi-line expressions)
         if task.schedule == .cron, let expr = task.cronExpression {
-            if let cron = try? CronExpression(parsing: expr) {
-                return cron.nextFireDate(after: date)
+            if let nextDate = CronExpression.nextFireDate(for: expr, after: date) {
+                return nextDate
             }
             return nil
         }

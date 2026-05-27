@@ -135,6 +135,9 @@
 "schedule.trigger_section" = "Trigger";
 "schedule.manual_only" = "Manual trigger only";
 "schedule.manual_only.help" = "Skip the scheduler — runs only via right-click or menu bar";
+"schedule.mode.standard" = "Standard";
+"schedule.mode.cron" = "Cron";
+"schedule.rules" = "rules";
 "tasklist.section.scheduled" = "Scheduled";
 "tasklist.section.manual" = "Manual";
 
@@ -186,6 +189,7 @@
 "cron.next_run" = "Next: %@";
 "cron.cannot_compute" = "Cannot compute";
 "cron.expression.placeholder" = "min hour day month weekday";
+"cron.multiline.hint" = "Supports multiple lines, one Cron rule per line. Lines starting with # are ignored.";
 
 /* Execution Status */
 "status.running" = "Running";

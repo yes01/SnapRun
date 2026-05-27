@@ -19,6 +19,18 @@ enum ScriptSource: String, CaseIterable {
     }
 }
 
+private enum EditorScheduleMode: String, CaseIterable {
+    case standard
+    case cron
+
+    var label: String {
+        switch self {
+        case .standard: L10n.tr("schedule.mode.standard")
+        case .cron: L10n.tr("schedule.mode.cron")
+        }
+    }
+}
+
 @MainActor
 struct TaskEditorView: View {
     @Environment(\.modelContext) private var modelContext
@@ -33,6 +45,7 @@ struct TaskEditorView: View {
 
     // Schedule
     @State private var isManualOnly = false
+    @State private var scheduleMode: EditorScheduleMode = .standard
     @State private var hasDate = true
     @State private var hasTime = true
     @State private var scheduledDate = Date()
@@ -40,6 +53,7 @@ struct TaskEditorView: View {
     @State private var endRepeatType: EndRepeatType = .never
     @State private var endRepeatDate = Calendar.current.date(byAdding: .month, value: 1, to: Date()) ?? Date()
     @State private var endRepeatCount = 10
+    @State private var cronExpression = ""
 
     // Script
     @State private var shell = "/bin/zsh"
@@ -105,7 +119,16 @@ struct TaskEditorView: View {
         case .shortcut:
             hasScript = !shortcutName.trimmingCharacters(in: .whitespaces).isEmpty
         }
-        return hasName && hasScript
+        let hasValidSchedule: Bool
+        if isManualOnly {
+            hasValidSchedule = true
+        } else if scheduleMode == .cron {
+            hasValidSchedule = !CronExpression.expressionLines(from: cronExpression).isEmpty
+                && CronExpression.firstParseError(in: cronExpression) == nil
+        } else {
+            hasValidSchedule = true
+        }
+        return hasName && hasScript && hasValidSchedule
     }
 
     var body: some View {
@@ -190,6 +213,20 @@ struct TaskEditorView: View {
             }
 
             if !isManualOnly {
+            Section(L10n.tr("editor.section.schedule")) {
+                Picker(L10n.tr("editor.schedule_type"), selection: $scheduleMode) {
+                    ForEach(EditorScheduleMode.allCases, id: \.self) { mode in
+                        Text(mode.label).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
+            if scheduleMode == .cron {
+                Section(L10n.tr("schedule.cron")) {
+                    CronEditorView(expression: $cronExpression)
+                }
+            } else {
             Section {
                 Toggle(isOn: $runOnLaunch) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -291,6 +328,18 @@ struct TaskEditorView: View {
             }
 
             if let nextDate = previewNextRun() {
+                Section {
+                    LabeledContent {
+                        Text(nextDate.formatted(date: .abbreviated, time: .standard))
+                            .foregroundStyle(.secondary)
+                    } label: {
+                        Label(L10n.tr("task.detail.next_run"), systemImage: "clock.arrow.circlepath")
+                    }
+                }
+            }
+            } 
+
+            if scheduleMode == .cron, let nextDate = previewNextRun() {
                 Section {
                     LabeledContent {
                         Text(nextDate.formatted(date: .abbreviated, time: .standard))
@@ -892,13 +941,19 @@ struct TaskEditorView: View {
 
     @MainActor
     private func previewNextRun() -> Date? {
-        guard hasDate || hasTime else { return nil }
         let tempTask = ScheduledTask()
-        tempTask.scheduledDate = scheduledDate
-        tempTask.repeatType = repeatType
-        tempTask.endRepeatType = endRepeatType
-        tempTask.endRepeatDate = endRepeatDate
-        tempTask.endRepeatCount = endRepeatCount
+        tempTask.isManualOnly = isManualOnly
+        if scheduleMode == .cron {
+            tempTask.schedule = .cron
+            tempTask.cronExpression = cronExpression
+        } else {
+            guard hasDate || hasTime else { return nil }
+            tempTask.scheduledDate = scheduledDate
+            tempTask.repeatType = repeatType
+            tempTask.endRepeatType = endRepeatType
+            tempTask.endRepeatDate = endRepeatDate
+            tempTask.endRepeatCount = endRepeatCount
+        }
         return TaskScheduler.shared.computeNextRunDate(for: tempTask)
     }
 
@@ -936,10 +991,12 @@ struct TaskEditorView: View {
         scheduledDate = Date()
         hasDate = true
         hasTime = true
+        scheduleMode = .standard
         repeatType = .daily
         endRepeatType = .never
         endRepeatDate = Calendar.current.date(byAdding: .month, value: 1, to: Date()) ?? Date()
         endRepeatCount = 10
+        cronExpression = ""
         customIntervalValue = 1
         customIntervalUnit = .day
         shell = "/bin/zsh"
@@ -1000,6 +1057,8 @@ struct TaskEditorView: View {
         isManualOnly = task.isManualOnly
         hasDate = task.hasDate
         hasTime = task.hasTime
+        scheduleMode = task.scheduleMode == .cron ? .cron : .standard
+        cronExpression = task.cronExpression ?? ""
 
         if let date = task.scheduledDate {
             scheduledDate = date
@@ -1035,13 +1094,33 @@ struct TaskEditorView: View {
         target.isManualOnly = isManualOnly
         target.hasDate = hasDate
         target.hasTime = hasTime
-        // When both toggles are off, drop the anchor so the scheduler falls back
-        // to "now" as base (TaskScheduler handles scheduledDate == nil).
-        target.scheduledDate = (hasDate || hasTime) ? scheduledDate : nil
-        target.repeatType = repeatType
-        target.endRepeatType = repeatType == .never ? .never : endRepeatType
-        target.endRepeatDate = endRepeatType == .onDate ? endRepeatDate : nil
-        target.endRepeatCount = endRepeatType == .afterCount ? endRepeatCount : nil
+        if isManualOnly {
+            target.schedule = .interval
+            target.cronExpression = nil
+            target.scheduledDate = nil
+            target.repeatType = .daily
+            target.endRepeatType = .never
+            target.endRepeatDate = nil
+            target.endRepeatCount = nil
+        } else if scheduleMode == .cron {
+            target.schedule = .cron
+            target.cronExpression = CronExpression.expressionLines(from: cronExpression).joined(separator: "\n")
+            target.scheduledDate = nil
+            target.repeatType = .daily
+            target.endRepeatType = .never
+            target.endRepeatDate = nil
+            target.endRepeatCount = nil
+        } else {
+            target.schedule = .interval
+            // When both toggles are off, drop the anchor so the scheduler falls back
+            // to "now" as base (TaskScheduler handles scheduledDate == nil).
+            target.scheduledDate = (hasDate || hasTime) ? scheduledDate : nil
+            target.repeatType = repeatType
+            target.endRepeatType = repeatType == .never ? .never : endRepeatType
+            target.endRepeatDate = endRepeatType == .onDate ? endRepeatDate : nil
+            target.endRepeatCount = endRepeatType == .afterCount ? endRepeatCount : nil
+            target.cronExpression = nil
+        }
         target.customIntervalValue = customIntervalValue
         target.customIntervalUnit = customIntervalUnit
         target.runMissedExecution = runMissedExecution
@@ -1049,7 +1128,6 @@ struct TaskEditorView: View {
         // if the user had toggled it before flipping to manual.
         target.runOnLaunch = isManualOnly ? false : runOnLaunch
 
-        target.cronExpression = nil
         target.intervalSeconds = nil
 
         switch scriptSource {

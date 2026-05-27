@@ -154,26 +154,6 @@ struct TaskListView: View {
             }
         }
         .searchable(text: $searchText, prompt: Text(L10n.tr("task.search.prompt")))
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 0) {
-                Divider()
-                Link(destination: URL(string: "https://www.lifedever.com/sponsor/")!) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "heart.fill")
-                            .font(.caption2)
-                            .foregroundStyle(.red)
-                        Text(L10n.tr("command.sponsor"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                }
-                .buttonStyle(.plain)
-                .pointerCursor()
-            }
-            .background(.bar)
-        }
     }
 
     @ViewBuilder
@@ -242,6 +222,12 @@ struct TaskListView: View {
         copy.customIntervalValue = task.customIntervalValue
         copy.customIntervalUnit = task.customIntervalUnit
         copy.isManualOnly = task.isManualOnly
+        copy.scheduleType = task.scheduleType
+        copy.cronExpression = task.cronExpression
+        copy.hasDate = task.hasDate
+        copy.hasTime = task.hasTime
+        copy.runMissedExecution = task.runMissedExecution
+        copy.runOnLaunch = task.runOnLaunch
         modelContext.insert(copy)
         do {
             try modelContext.save()
@@ -319,7 +305,7 @@ struct TaskListRow: View {
                     } else {
                         Image(systemName: "repeat")
                             .font(.system(size: 9))
-                        Text(task.repeatType.displayName)
+                        Text(task.scheduleSummary)
                             .font(.caption2)
                     }
 

@@ -50,6 +50,31 @@ public struct CronExpression: Sendable {
         ("dayOfWeek", 0...6)
     ]
 
+    public static func expressionLines(from raw: String) -> [String] {
+        raw
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty && !$0.hasPrefix("#") }
+    }
+
+    public static func firstParseError(in expressionsText: String) -> String? {
+        for (index, line) in expressionLines(from: expressionsText).enumerated() {
+            do {
+                _ = try CronExpression(parsing: line)
+            } catch {
+                return "Line \(index + 1): \(error.localizedDescription)"
+            }
+        }
+        return nil
+    }
+
+    public static func nextFireDate(for expressionsText: String, after date: Date = Date()) -> Date? {
+        expressionLines(from: expressionsText)
+            .compactMap { try? CronExpression(parsing: $0) }
+            .compactMap { $0.nextFireDate(after: date) }
+            .min()
+    }
+
     public init(parsing expression: String) throws {
         self.raw = expression.trimmingCharacters(in: .whitespaces)
         let parts = self.raw.split(separator: " ", omittingEmptySubsequences: true).map(String.init)

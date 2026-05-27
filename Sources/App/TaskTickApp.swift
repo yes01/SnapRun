@@ -250,16 +250,6 @@ struct SnapRunApp: App {
             Button(L10n.tr("command.check_updates")) {
                 Task { await updateChecker.checkForUpdates(userInitiated: true) }
             }
-
-            Divider()
-
-            Button {
-                if let url = URL(string: "https://www.lifedever.com/sponsor/") {
-                    NSWorkspace.shared.open(url)
-                }
-            } label: {
-                Label(L10n.tr("command.sponsor"), systemImage: "heart")
-            }
         }
 
         CommandGroup(replacing: .newItem) {
